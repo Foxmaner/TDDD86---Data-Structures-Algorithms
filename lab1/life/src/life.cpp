@@ -82,24 +82,31 @@ int numberOfNeighbor(const Grid<int>& grid, int row, int colum){
     return numberOfNeighbor;
 }
 
-void tick( Grid<int>& grid,int nrOfRows, int nrOfColumns){
+ Grid<int> tick( Grid<int>& grid,int nrOfRows, int nrOfColumns){
+    Grid<int> newGrid = Grid<int>(nrOfRows,nrOfColumns);
     for(int row = 0; row <nrOfRows;row ++ ){
         for(int colum = 0; colum<nrOfColumns; colum ++){
             int count = numberOfNeighbor(grid,row,colum);
 
             if(count <= 1){
-                grid.set(row,colum,0);
+                newGrid.set(row,colum,0);
             }
 
             else if(count == 3){
-                grid.set(row,colum,1);
+                newGrid.set(row,colum,1);
+            }
+
+            else if(count == 2){
+                // Check start value
+                newGrid.set(row,colum,grid[row][colum]);
             }
 
             else if(count >= 3){
-                grid.set(row,colum,0);
+                newGrid.set(row,colum,0);
             }
         }
     }
+    return newGrid;
 }
 
 
@@ -151,17 +158,24 @@ int main() {
     char choice;
     bool cont = true;
     while(cont){
+        clearConsole();
         printGrid(grid);
         cout << "\n a)nimate, t)ick, q)uit?";
-
         cin >> choice;
         if(choice=='q'){
             cont=false;
         }else if(choice=='t'){
-            tick(grid,nrOfRows,nrOfColumns);
+            grid = tick(grid,nrOfRows,nrOfColumns);
             //Do one tick on the grid
         }else if(choice=='a'){
             //Do 10 ticks on grid with some pauses inbetween
+            for(int i = 0; i < 10; i++){
+                clearConsole();
+                grid = tick(grid,nrOfRows,nrOfColumns);
+                cout << flush;
+                printGrid(grid);
+                pause(1000);
+            }
         }else{
             cout << "Try again!\n";
         }
