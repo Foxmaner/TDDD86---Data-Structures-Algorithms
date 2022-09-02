@@ -9,6 +9,21 @@
 #include <fstream>
 
 using namespace std;
+
+void printGrid(const Grid<int>& grid){
+    for(int row=0;row<grid.numRows();row++){
+        for(int col=0;col<grid.numCols();col++){
+            if(grid.get(row,col)==0){
+                cout << "-";
+            }else{
+                cout << "x";
+            }
+        }
+        cout << "\n";
+    }
+
+}
+
 int main() {
     //Filename for initGame. max 20 long
     string fileName;
@@ -33,7 +48,8 @@ int main() {
       int nrOfColumns;
 
       // Read from the text file
-      ifstream MyReadFile("../" + fileName);
+      //ifstream MyReadFile("../" + fileName);
+      ifstream MyReadFile("../file.txt");
 
       MyReadFile >> nrOfRows;
       MyReadFile >> nrOfColumns;
@@ -49,14 +65,32 @@ int main() {
            }
          }
       }
-        cout << grid.toString();
       // Close the file
       MyReadFile.close();
+
+      //Running
+      char choice;
+      bool cont = true;
+      while(cont){
+          printGrid(grid);
+          cout << "\n a)nimate, t)ick, q)uit?";
+
+          cin >> choice;
+          if(choice=='q'){
+              cont=false;
+          }else if(choice=='t'){
+
+          }else if(choice=='a'){
+
+          }else{
+              cout << "Try again!\n";
+          }
+      }
 
 
 
     //_______________________________________
-
+    cout << "Have a nice Life!\n";
     return 0;
 }
 
