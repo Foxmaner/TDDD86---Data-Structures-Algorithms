@@ -11,9 +11,9 @@
 using namespace std;
 int main() {
     //Filename for initGame. max 20 long
-    char fileName[20];
+    string fileName;
     //Store message as a string
-    char welcomeMessage[] = "Welcome to the TDDD86 Game of Life,"
+    string welcomeMessage = "Welcome to the TDDD86 Game of Life,"
                             " a simulation of the lifecycle of a bacteria colony."
                             " \nCells (X) live and die by the following rules:"
                             " \n - A cell with 1 or fewer neighbours dies."
@@ -22,16 +22,16 @@ int main() {
                             " \n - A cell with 4 or more neighbours dies."
                             " \n \n Grid input file name?";
     //Write out wellcome message
-    std::cout << welcomeMessage << std::endl;
+    cout << welcomeMessage << endl;
     //Take in filename
-    std::cin >> fileName;
+    cin >> fileName;
     //_______________________________________
     //READ TEXT CONTENT
 
       string myText;
 
       // Read from the text file
-      ifstream MyReadFile("../file.txt");
+      ifstream MyReadFile("../" + fileName);
 
       // Use a while loop together with the getline() function to read the file line by line
       while (getline (MyReadFile, myText)) {
@@ -44,14 +44,6 @@ int main() {
 
 
     //_______________________________________
-
-
-
-
-
-
-    //Write out filename
-    std::cout << fileName << std::endl;
 
     return 0;
 }
