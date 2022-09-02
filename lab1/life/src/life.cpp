@@ -37,7 +37,7 @@ int main() {
 
       MyReadFile >> nrOfRows;
       MyReadFile >> nrOfColumns;
-
+      //Creates new grid with correct width/height
       Grid<int> grid = Grid<int>(nrOfRows,nrOfColumns);
 
       cout << grid.toString();
