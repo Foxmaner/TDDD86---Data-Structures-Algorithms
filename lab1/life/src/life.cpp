@@ -127,8 +127,7 @@ int main() {
     int nrOfColumns;
 
     // Read from the text file
-    //ifstream MyReadFile("../" + fileName);
-    ifstream MyReadFile("../file.txt");
+    ifstream MyReadFile(fileName);
 
     MyReadFile >> nrOfRows;
     MyReadFile >> nrOfColumns;
@@ -136,10 +135,11 @@ int main() {
     Grid<int> grid = Grid<int>(nrOfRows,nrOfColumns);
 
     string nextLine;
+
     for(int i=0;i<nrOfRows;i++){
         MyReadFile >> nextLine;
         for(int j=0;j<nrOfColumns;j++){
-            if(nextLine[j]=='x'){
+            if(nextLine[j]=='X'){
                 grid.set(i,j,1);
             }
         }
