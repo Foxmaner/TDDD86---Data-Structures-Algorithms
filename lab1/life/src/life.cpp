@@ -29,18 +29,22 @@ int main() {
     //READ TEXT CONTENT
 
       string myText;
+      int nrOfRows;
+      int nrOfColumns;
 
       // Read from the text file
       ifstream MyReadFile("../" + fileName);
 
-      // Use a while loop together with the getline() function to read the file line by line
-      while (getline (MyReadFile, myText)) {
-        // Output the text from the file
-        cout << myText;
-      }
+      MyReadFile >> nrOfRows;
+      MyReadFile >> nrOfColumns;
+
+      Grid<int> grid = Grid<int>(nrOfRows,nrOfColumns);
+
+      cout << grid.toString();
 
       // Close the file
       MyReadFile.close();
+
 
 
     //_______________________________________
