@@ -40,8 +40,16 @@ int main() {
       //Creates new grid with correct width/height
       Grid<int> grid = Grid<int>(nrOfRows,nrOfColumns);
 
-      cout << grid.toString();
-
+      string nextLine;
+      for(int i=0;i<nrOfRows;i++){
+         MyReadFile >> nextLine;
+         for(int j=0;j<nrOfColumns;j++){
+           if(nextLine[j]=='x'){
+            grid.set(i,j,1);
+           }
+         }
+      }
+        cout << grid.toString();
       // Close the file
       MyReadFile.close();
 
