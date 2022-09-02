@@ -6,6 +6,9 @@
 #include "grid.h"
 #include "lifeutil.h"
 #include <string>
+#include <fstream>
+
+using namespace std;
 int main() {
     //Filename for initGame. max 20 long
     char fileName[20];
@@ -22,8 +25,34 @@ int main() {
     std::cout << welcomeMessage << std::endl;
     //Take in filename
     std::cin >> fileName;
+    //_______________________________________
+    //READ TEXT CONTENT
+
+      string myText;
+
+      // Read from the text file
+      ifstream MyReadFile("../file.txt");
+
+      // Use a while loop together with the getline() function to read the file line by line
+      while (getline (MyReadFile, myText)) {
+        // Output the text from the file
+        cout << myText;
+      }
+
+      // Close the file
+      MyReadFile.close();
+
+
+    //_______________________________________
+
+
+
+
+
+
     //Write out filename
     std::cout << fileName << std::endl;
 
     return 0;
 }
+
