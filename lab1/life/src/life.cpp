@@ -7,9 +7,9 @@
 #include "lifeutil.h"
 #include <string>
 int main() {
-
-    // TODO: Finish the program!
-
+    //Filename for initGame. max 20 long
+    char fileName[20];
+    //Store message as a string
     char welcomeMessage[] = "Welcome to the TDDD86 Game of Life,"
                             " a simulation of the lifecycle of a bacteria colony."
                             " \nCells (X) live and die by the following rules:"
@@ -18,7 +18,12 @@ int main() {
                             " \n - Locations with 3 neighbours will create life."
                             " \n - A cell with 4 or more neighbours dies."
                             " \n \n Grid input file name?";
-
+    //Write out wellcome message
     std::cout << welcomeMessage << std::endl;
+    //Take in filename
+    std::cin >> fileName;
+    //Write out filename
+    std::cout << fileName << std::endl;
+
     return 0;
 }
