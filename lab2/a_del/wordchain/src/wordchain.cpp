@@ -15,7 +15,9 @@ int main() {
 
     cout << "Please type two words: ";
 
-    // TODO: Finish the program!
+    // Takes in the first and last word.
+    string firstWord,lastWord;
+    cin >> firstWord >> lastWord;
 
     return 0;
 }
