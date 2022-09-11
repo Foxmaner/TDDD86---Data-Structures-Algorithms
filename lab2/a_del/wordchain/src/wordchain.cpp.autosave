@@ -34,10 +34,10 @@ void wordChain(string firstWord, string lastWord, vector<string>& wordDict){
                 for(int indexInAlphabet = 0; indexInAlphabet < (int)ALPHABET.size(); indexInAlphabet++){
                     firstWord[indexInWord] = ALPHABET[indexInAlphabet];
                     if(std::find(wordDict.begin(), wordDict.end(), firstWord) != wordDict.end() ){
-                        stack<string> copyCurrentStack = currentStack;
-                        copyCurrentStack.push(firstWord);
-                        stackQueue.push(copyCurrentStack);
+                        //stack<string> copyCurrentStack = currentStack;
+                        currentStack.push(firstWord);                      
                     }
+                    
                 }
             }
         }
