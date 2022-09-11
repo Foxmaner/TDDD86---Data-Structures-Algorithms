@@ -4,20 +4,42 @@
 #include <queue>
 #include <stack>
 #include <algorithm>
+#include <set>
 using namespace std;
 
 const string ALPHABET  = "abcdefghijklmnopqrstuvwxyz";
 
-void wordChain(string firstWord, string lastWord, vector<string>& wordDict){
+
+set<string> getNeighbors(string word,set<string> &wordDict){
+    set<string> neighbor;
+    for(int indexInWord = 0; indexInWord < (int) word.size(); indexInWord++){
+        for(int indexInAlphabet = 0; indexInAlphabet < (int)ALPHABET.size(); indexInAlphabet++){
+
+            string newWord = word;
+            newWord[indexInWord] = ALPHABET[indexInAlphabet];
+            if(wordDict.find(newWord) != wordDict.end()){
+                //stack<string> copyCurrentStack = currentStack;
+                neighbor.insert(newWord);
+            }
+
+        }
+    }
+    return neighbor;
+}
+
+void wordChain(string firstWord, string lastWord, set<string> &wordDict){
     queue<stack<string>> stackQueue;
 
-    stack<string> firstWordStack;
-    firstWordStack.push(firstWord);
+    stack<string> currentStack;
+    currentStack.push(firstWord);
+    set<string> UsedWords;
 
-    stackQueue.push(firstWordStack);
+    stackQueue.push(currentStack);
+    stack<string> tempStack;
 
-    while(stackQueue.size()){
-        stack<string> currentStack = stackQueue.front();
+    set<string> neighbor;
+    while(!stackQueue.empty()){
+        currentStack = stackQueue.front();
         stackQueue.pop();
 
         string wordAtTop = currentStack.top();
@@ -26,31 +48,44 @@ void wordChain(string firstWord, string lastWord, vector<string>& wordDict){
             cout << "Hitta ordet. listan kommer.... \n";
             while(!currentStack.empty()){
                 string partWord = currentStack.top();
-                std::cout << partWord;
                 currentStack.pop();
+                cout <<  " => " + partWord + "  ";
             }
-        }else{
-            for(int indexInWord = 0; indexInWord < (int) firstWord.size(); indexInWord++){
-                for(int indexInAlphabet = 0; indexInAlphabet < (int)ALPHABET.size(); indexInAlphabet++){
-                    firstWord[indexInWord] = ALPHABET[indexInAlphabet];
-                    if(std::find(wordDict.begin(), wordDict.end(), firstWord) != wordDict.end() ){
-                        stack<string> copyCurrentStack = currentStack;
-                        copyCurrentStack.push(firstWord);
-                        stackQueue.push(copyCurrentStack);
-                    }
+        }
+        else{
+
+            neighbor = getNeighbors(wordAtTop,wordDict);
+
+            //vector <string> neighbors = neighbor;
+
+
+
+            for(string w : neighbor) {
+
+                //string word = neighbor.at(neighborCheck);
+
+                if(UsedWords.find(w) == UsedWords.end()){
+                    tempStack = currentStack;
+
+                    tempStack.push(w);
+                    stackQueue.push(tempStack);
+                    UsedWords.insert(w);
                 }
             }
         }
     }
+
 }
 
-vector<string> loadDictToVector(){
-    vector<string> wordDict;
+set<string> loadFile(unsigned wordLenght){
+    set<string> wordDict = set<string>();
     ifstream MyReadFile("dictionary.txt");
     string currentWord;
     // While there are more words to be read, keep pushing into vektor
+
     while (MyReadFile >> currentWord){
-        wordDict.push_back(currentWord);
+        if(currentWord.length() == wordLenght)
+        wordDict.insert(currentWord);
     }
     return wordDict;
 }
@@ -66,8 +101,7 @@ int main() {
     // Takes in the first and last word.
     string firstWord,lastWord;
     cin >> firstWord >> lastWord;
-    vector<string> wordDict = loadDictToVector(); 
+    set<string> wordDict = loadFile(firstWord.length());
     wordChain(firstWord,lastWord, wordDict);
-    loadDictToVector();
     return 0;
 }
