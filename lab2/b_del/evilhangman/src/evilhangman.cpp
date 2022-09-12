@@ -49,5 +49,20 @@ int main() {
     for(std::set<string>::iterator it=si.begin(); it!=si.end(); ++it)
         std::cout << *it << std::endl;
     */
+
+    while(1){
+        int selectedWordLength;
+        cin >> selectedWordLength;
+
+        if(selectedWordLength==0){
+            cout << "Du kan ju inte välja ett ord med 0 bokstäver idiot!";
+        }else{
+            if(!myMap.count(selectedWordLength)){
+                cout << "Finns inga sånna ord bror!";
+            }
+        }
+
+    }
+
     return 0;
 }
