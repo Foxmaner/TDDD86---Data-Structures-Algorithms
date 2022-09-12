@@ -70,6 +70,10 @@ int main() {
             cout << "Antal gisnigar måste vara mellan 1 och 26 \n";
             cin >> selectedGuesses;
         }
+        int inputTest;
+        cout << "\n type 1/0 för att se antalet kvarvarande ord";
+        cin >> inputTest;
+        
 
 
     }
