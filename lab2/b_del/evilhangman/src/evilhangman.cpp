@@ -7,6 +7,26 @@ using namespace std;
 
 const string ALPHABET  = "abcdefghijklmnopqrstuvwxyz";
 
+
+void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availableWords){
+    set<char> usedAlpabet;
+    char inputChar;
+    int nrOfTriesLeft = selectedGuesses;
+
+    while(nrOfTriesLeft){
+        cout << "Använda bokstäver: ";
+        for(set<char>::iterator it=usedAlpabet.begin(); it!=usedAlpabet.end(); ++it){
+            cout << *it;
+        }
+        cout << "\n Skriv in en bokstav:";
+        cin>>inputChar;
+        cin.ignore(10000, '\n');
+        usedAlpabet.insert(inputChar);
+        nrOfTriesLeft--;
+        cout << "Försök kvar: " << nrOfTriesLeft << "\n";
+    }
+}
+
 /*
 Creates a map of sets with strings.
 It groups strings together with words of same length.
@@ -52,16 +72,19 @@ int main() {
     while(1){
         int selectedWordLength = 0;
         int selectedGuesses = 0;
+        set<string> availableWords;
         cout << "\n Välj längden på ordet";
         cin >> selectedWordLength;
 
 
 
         while(!myMap.count(selectedWordLength)){
-              cout << "Ord längden finns inte \n";
-              cin >> selectedWordLength;
-
+            cout << "Ord längden finns inte \n";
+            cin >> selectedWordLength;
         }
+        //Load with available words
+        availableWords=myMap.at(selectedWordLength);
+
 
         cout << "\n välj antal gisningar";
         cin >> selectedWordLength;
@@ -73,7 +96,13 @@ int main() {
         int inputTest;
         cout << "\n type 1/0 för att se antalet kvarvarande ord";
         cin >> inputTest;
+
+        if(inputTest){
+            for(set<string>::iterator it=availableWords.begin(); it!=availableWords.end(); ++it)
+                cout << *it +", " << endl;
+        }
         
+        runGame(selectedWordLength,selectedGuesses,availableWords);
 
 
     }
