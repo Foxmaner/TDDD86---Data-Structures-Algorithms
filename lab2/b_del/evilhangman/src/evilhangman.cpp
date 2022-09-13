@@ -7,6 +7,30 @@ using namespace std;
 
 const string ALPHABET  = "abcdefghijklmnopqrstuvwxyz";
 
+bool correntGuess(char& guess, set<string> possibleWords){
+    map<int,set<string>> wordGroups;
+
+
+    for(set<string>::iterator it=possibleWords.begin(); it!=possibleWords.end(); ++it){
+        string currentWord = *it;
+
+        if(currentWord.length() == 0){
+            continue;
+        }else if(!wordGroups.count(currentWord.length())){
+            //Key does not already exist, creates a new one
+            set<string> tempSet;
+            tempSet.insert(currentWord);
+            wordGroups.insert(pair<int, set<string>>(currentWord.length(), tempSet));
+        }else{
+            //Key already exist. Insert at correct key.
+            wordGroups.at(currentWord.size()).insert(currentWord);
+        }
+    }
+
+
+
+}
+
 
 void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availableWords){
     set<char> usedAlpabet;
@@ -69,28 +93,28 @@ int main() {
         int selectedWordLength = 0;
         int selectedGuesses = 0;
         set<string> availableWords;
-        cout << "\n Välj längden på ordet";
+        cout << "\n Välj längden på ordet: ";
         cin >> selectedWordLength;
 
 
 
         while(!myMap.count(selectedWordLength)){
-            cout << "Ord längden finns inte \n";
+            cout << "Ord längden finns inte, skriv nytt: ";
             cin >> selectedWordLength;
         }
         //Load with available words
         availableWords=myMap.at(selectedWordLength);
 
 
-        cout << "\n välj antal gisningar";
-        cin >> selectedWordLength;
+        cout << "\n Välj antal gisningar: ";
+        cin >> selectedGuesses;
 
         while(selectedGuesses<=0) {
-            cout << "Antal gisnigar måste vara mellan 1 och 26 \n";
+            cout << "Antal gisnigar måste vara mellan 1 och 26, försök igen: ";
             cin >> selectedGuesses;
         }
         int inputTest;
-        cout << "\n type 1/0 för att se antalet kvarvarande ord";
+        cout << "Skriv 1/0 för att se antalet kvarvarande ord: ";
         cin >> inputTest;
 
         if(inputTest){
