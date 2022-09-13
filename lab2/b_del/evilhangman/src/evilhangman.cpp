@@ -25,7 +25,6 @@ set<string> largestWordGroup(char& guess, set<string> possibleWords){
 
         if(!wordGroups.count(keyValue)){
             //Key does not already exist, creates a new one
-            cout << currentWord << "<- currentWord \n";
             set<string> tempSet;
             tempSet.insert(currentWord);
             wordGroups.insert(pair<int, set<string>>(keyValue, tempSet));
@@ -46,14 +45,14 @@ set<string> largestWordGroup(char& guess, set<string> possibleWords){
 }
 
 
-void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availableWords){
+void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availableWords, int debugState){
     set<char> usedAlpabet;
     char inputChar;
     int nrOfTriesLeft = selectedGuesses;
     string guessWord(electedWordLength,'_');
 
 
-    while(nrOfTriesLeft){
+    while(nrOfTriesLeft> 0){
         cout << "Försök kvar: " << nrOfTriesLeft << "\n";
         cout << "Ordet:" << guessWord << "\n";
         cout << "Använda bokstäver: ";
@@ -76,17 +75,24 @@ void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availabl
                 }
            }
         }
-        cout << guessWord;
-        if(availableWords.size()==0){
-            cout << "Du har klarat spelet!!! \n ";
+
+
+        if(debugState == 1){
+            for(set<string>::iterator it=availableWords.begin(); it!=availableWords.end(); ++it)
+                std::cout << *it << std::endl;
+        }
+        auto ThelastWord = *(availableWords.begin());
+        if(availableWords.size()==1 && ThelastWord == guessWord ){
+            cout << "\n" "Du har klarat spelet!!! \n ";
+            cout << "Här har du det gissande ordet -->" << guessWord;
             break;
         }
-        /*
-        for(set<string>::iterator it=availableWords.begin(); it!=availableWords.end(); ++it)
-            std::cout << *it << std::endl;
-        */
+        cout << "Här har du det gissande ordet -->" << guessWord;
     }
-
+    if(availableWords.size() > 1){
+    auto endingWord = *(availableWords.begin());
+    cout << "You lost this is the word -->" <<endingWord;
+    }
     int playAgainInput;
     cout << "\n Spelet är över. Vill du spela igen? 1/0: ";
     cin >> playAgainInput;
@@ -165,7 +171,7 @@ int main() {
                 cout << *it +", " << endl;
         }
         
-        runGame(selectedWordLength,selectedGuesses,availableWords);
+        runGame(selectedWordLength,selectedGuesses,availableWords,inputTest);
 
 
     }
