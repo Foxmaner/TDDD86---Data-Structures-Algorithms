@@ -23,22 +23,26 @@ set<string> largestWordGroup(char& guess, set<string> possibleWords){
         }
 
 
-        if(keyValue == 0){
-            continue;
-        } if(!wordGroups.count(keyValue)){
+        if(!wordGroups.count(keyValue)){
             //Key does not already exist, creates a new one
+            cout << currentWord << "<- currentWord \n";
             set<string> tempSet;
             tempSet.insert(currentWord);
             wordGroups.insert(pair<int, set<string>>(keyValue, tempSet));
         }else{
-
             //Key already exist. Insert at correct key.
             wordGroups.at(keyValue).insert(currentWord);
         }
     }
-    //set<string> largestElement = (wordGroups.end())->second;
+    set<string> largestElement;
+    for ( auto it = wordGroups.begin(); it != wordGroups.end(); ++it  ){
+       set<string> currentElement = it->second;
 
-
+       if(largestElement.size()<currentElement.size()){
+           largestElement=currentElement;
+       }
+    }
+    return largestElement;
 }
 
 
@@ -61,10 +65,35 @@ void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availabl
         cin.ignore(10000, '\n');
         usedAlpabet.insert(inputChar);
         nrOfTriesLeft--;
-        set<string> test = largestWordGroup(inputChar, availableWords);
-        for(set<string>::iterator it=test.begin(); it!=test.end(); ++it)
-            std::cout << *it << std::endl;
+        availableWords = largestWordGroup(inputChar, availableWords);
 
+        if(availableWords.size()==0){
+            //Fel
+        }else{
+           for(unsigned int i = 0; i<availableWords.rbegin()->size(); i++){
+                if(availableWords.rbegin()->at(i)==inputChar){
+                    guessWord.at(i)=inputChar;
+                }
+           }
+        }
+        cout << guessWord;
+        if(availableWords.size()==0){
+            cout << "Du har klarat spelet!!! \n ";
+            break;
+        }
+        /*
+        for(set<string>::iterator it=availableWords.begin(); it!=availableWords.end(); ++it)
+            std::cout << *it << std::endl;
+        */
+    }
+
+    int playAgainInput;
+    cout << "\n Spelet är över. Vill du spela igen? 1/0: ";
+    cin >> playAgainInput;
+    if(playAgainInput){
+        return;
+    }else{
+        exit(EXIT_SUCCESS);
     }
 }
 
