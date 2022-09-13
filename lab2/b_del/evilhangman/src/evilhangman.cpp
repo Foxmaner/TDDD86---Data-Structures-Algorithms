@@ -12,8 +12,11 @@ void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availabl
     set<char> usedAlpabet;
     char inputChar;
     int nrOfTriesLeft = selectedGuesses;
+    string guessWord(electedWordLength,'_');
+
 
     while(nrOfTriesLeft){
+        cout << "Ordet:" << guessWord << "\n";
         cout << "Använda bokstäver: ";
         for(set<char>::iterator it=usedAlpabet.begin(); it!=usedAlpabet.end(); ++it){
             cout << *it;
@@ -62,13 +65,6 @@ int main() {
     // TODO: Finish the program!
     map<int, set<string>> myMap = loadFile();
 
-
-    /*
-    set<string> si = myMap.at(3);
-    for(std::set<string>::iterator it=si.begin(); it!=si.end(); ++it)
-        std::cout << *it << std::endl;
-    */
-
     while(1){
         int selectedWordLength = 0;
         int selectedGuesses = 0;
@@ -89,7 +85,7 @@ int main() {
         cout << "\n välj antal gisningar";
         cin >> selectedWordLength;
 
-        while(selectedGuesses <=0) {
+        while(selectedGuesses<=0) {
             cout << "Antal gisnigar måste vara mellan 1 och 26 \n";
             cin >> selectedGuesses;
         }
