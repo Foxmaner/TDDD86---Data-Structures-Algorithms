@@ -3,30 +3,40 @@
 #include <set>
 #include <fstream>
 #include <map>
+#include <math.h>
+#include <algorithm>
 using namespace std;
 
 const string ALPHABET  = "abcdefghijklmnopqrstuvwxyz";
 
-bool correntGuess(char& guess, set<string> possibleWords){
+set<string> largestWordGroup(char& guess, set<string> possibleWords){
     map<int,set<string>> wordGroups;
 
 
     for(set<string>::iterator it=possibleWords.begin(); it!=possibleWords.end(); ++it){
         string currentWord = *it;
+        int keyValue = 0;
+        for (unsigned int n = 0; n < currentWord.size(); n++){
+            if(currentWord[n] == guess){
+                keyValue += pow(2,n);
+            }
+        }
 
-        if(currentWord.length() == 0){
+
+        if(keyValue == 0){
             continue;
-        }else if(!wordGroups.count(currentWord.length())){
+        } if(!wordGroups.count(keyValue)){
             //Key does not already exist, creates a new one
             set<string> tempSet;
             tempSet.insert(currentWord);
-            wordGroups.insert(pair<int, set<string>>(currentWord.length(), tempSet));
+            wordGroups.insert(pair<int, set<string>>(keyValue, tempSet));
         }else{
+
             //Key already exist. Insert at correct key.
-            wordGroups.at(currentWord.size()).insert(currentWord);
+            wordGroups.at(keyValue).insert(currentWord);
         }
     }
-
+    //set<string> largestElement = (wordGroups.end())->second;
 
 
 }
@@ -40,6 +50,7 @@ void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availabl
 
 
     while(nrOfTriesLeft){
+        cout << "Försök kvar: " << nrOfTriesLeft << "\n";
         cout << "Ordet:" << guessWord << "\n";
         cout << "Använda bokstäver: ";
         for(set<char>::iterator it=usedAlpabet.begin(); it!=usedAlpabet.end(); ++it){
@@ -50,7 +61,10 @@ void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availabl
         cin.ignore(10000, '\n');
         usedAlpabet.insert(inputChar);
         nrOfTriesLeft--;
-        cout << "Försök kvar: " << nrOfTriesLeft << "\n";
+        set<string> test = largestWordGroup(inputChar, availableWords);
+        for(set<string>::iterator it=test.begin(); it!=test.end(); ++it)
+            std::cout << *it << std::endl;
+
     }
 }
 
