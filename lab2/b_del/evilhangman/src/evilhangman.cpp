@@ -93,14 +93,20 @@ void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availabl
         }
         cout << "\n Skriv in en bokstav:";
         cin>>inputChar;
+        //Used to only accept the first character which is entered.
         cin.ignore(10000, '\n');
+        //Adds it to the table of used chars
         usedAlpabet.insert(inputChar);
         nrOfTriesLeft--;
+        //Fetches all the available words, from the largest word group
         availableWords = largestWordGroup(inputChar, availableWords);
+
 
         if(availableWords.size()==0){
             //Fel
         }else{
+
+           //Removes the "unknown" spaces in the guess-word and replaces with the real char
            for(unsigned int i = 0; i<availableWords.rbegin()->size(); i++){
                 if(availableWords.rbegin()->at(i)==inputChar){
                     guessWord.at(i)=inputChar;
@@ -108,23 +114,28 @@ void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availabl
            }
         }
 
-
+        //If debug state is activated, output availableWords
         if(debugState == 1){
             for(set<string>::iterator it=availableWords.begin(); it!=availableWords.end(); ++it)
                 std::cout << *it << std::endl;
         }
         auto ThelastWord = *(availableWords.begin());
+        //If true, the player has won
         if(availableWords.size()==1 && ThelastWord == guessWord ){
             cout << "\n" "Du har klarat spelet!!! \n ";
             cout << "Här har du det gissande ordet -->" << guessWord;
             break;
         }
-        cout << "Här har du det gissande ordet -->" << guessWord;
+        cout << "Här har du det gissande ordet -->" << guessWord << "\n";
     }
-    if(availableWords.size() > 1){
+
+    //After the wile loop
+    //Checks if there are words left. If so, the player has lost
+    if((availableWords.size()>=1) && !(*(availableWords.begin()) == guessWord)){
     auto endingWord = *(availableWords.begin());
     cout << "You lost this is the word -->" <<endingWord;
     }
+    //Ask if user want to play again. Return to main, or closes the program.
     int playAgainInput;
     cout << "\n Spelet är över. Vill du spela igen? 1/0: ";
     cin >> playAgainInput;
