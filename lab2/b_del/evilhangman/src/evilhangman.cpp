@@ -1,3 +1,14 @@
+/*
+ *Programmerare: Eskbr129, Bjoed735
+ * Eskil Brännerud, Björn Edblom.
+ * I denna labb skapar vi en svårare version av evilhangman.
+ * Istället för att spelet väljer 1 ord i början, så byter den istället
+ * ord under spelets gång för att göra det så svårt som möjligt för spelaren.
+ * Spelet avslutas när spelaren gissat rätt, eller mer troligt, fått slut på försök...
+ *
+ *
+*/
+
 #include <iostream>
 #include <string>
 #include <set>
@@ -9,6 +20,17 @@ using namespace std;
 
 const string ALPHABET  = "abcdefghijklmnopqrstuvwxyz";
 
+
+/**
+ * largestWordGroup
+ *
+ * The function which runs the game.
+ *
+ * When the game is over, it returns (to the main function) for a restart. Or it exists the program.
+ *
+ * @param guess, possibleWords
+ * @return set<String> largestWordGroup
+ */
 set<string> largestWordGroup(char& guess, set<string> possibleWords){
     map<int,set<string>> wordGroups;
 
@@ -44,14 +66,24 @@ set<string> largestWordGroup(char& guess, set<string> possibleWords){
     return largestElement;
 }
 
-
+/**
+ * runGame
+ *
+ * The function which runs the game.
+ *
+ * When the game is over, it returns (to the main function) for a restart. Or it exits the program.
+ *
+ * @param selectedWordLength, selectedNrOfGuesses, availableWords, debugState
+ * @return N/A
+ */
 void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availableWords, int debugState){
     set<char> usedAlpabet;
     char inputChar;
     int nrOfTriesLeft = selectedGuesses;
+    //The "guessword" only filled with _ at the start
     string guessWord(electedWordLength,'_');
 
-
+    //Run the game as long as there are guesses left
     while(nrOfTriesLeft> 0){
         cout << "Försök kvar: " << nrOfTriesLeft << "\n";
         cout << "Ordet:" << guessWord << "\n";
@@ -103,17 +135,22 @@ void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availabl
     }
 }
 
-/*
-Creates a map of sets with strings.
-It groups strings together with words of same length.
-*/
+/**
+ * loadFile
+ *
+ * Returns a map with sets of strings. The map-keys correspond to
+ * the words length.
+ *
+ * @param N/A
+ * @return map<int, set<string>> dictionary
+ */
 map<int, set<string>> loadFile(){
     map<int, set<string>> dictionary;
     //Dictionary
     ifstream MyReadFile("dictionary.txt");
     string currentWord;
-    // While there are more words to be read, keep pushing into vektor
 
+    // While there are more words to be read, keep pushing into vektor
     //Read new words.
     while (MyReadFile >> currentWord){
         if(currentWord.length() == 0){
@@ -131,22 +168,29 @@ map<int, set<string>> loadFile(){
     return dictionary;
 }
 
-
+/**
+ * Main function
+ *
+ * The programs entry-point.
+ * It is used for menu, so to collect users input to finaly start the game
+ * with the users settings applied.
+ *
+ * @param N/A
+ * @return N/A
+ */
 int main() {
     cout << "Welcome to Hangman." << endl;
 
-    // TODO: Finish the program!
     map<int, set<string>> myMap = loadFile();
 
-    while(1){
+    while(true){
         int selectedWordLength = 0;
         int selectedGuesses = 0;
+
+        //Asks for the word length, until a word is found
         set<string> availableWords;
         cout << "\n Välj längden på ordet: ";
         cin >> selectedWordLength;
-
-
-
         while(!myMap.count(selectedWordLength)){
             cout << "Ord längden finns inte, skriv nytt: ";
             cin >> selectedWordLength;
@@ -154,7 +198,7 @@ int main() {
         //Load with available words
         availableWords=myMap.at(selectedWordLength);
 
-
+        //Asks for the number of guesses
         cout << "\n Välj antal gisningar: ";
         cin >> selectedGuesses;
 
@@ -162,6 +206,8 @@ int main() {
             cout << "Antal gisnigar måste vara mellan 1 och 26, försök igen: ";
             cin >> selectedGuesses;
         }
+
+        //Asks if debug-mode should be enabled
         int inputTest;
         cout << "Skriv 1/0 för att se antalet kvarvarande ord: ";
         cin >> inputTest;
@@ -170,7 +216,7 @@ int main() {
             for(set<string>::iterator it=availableWords.begin(); it!=availableWords.end(); ++it)
                 cout << *it +", " << endl;
         }
-        
+        //Runs game with all collected parametrs
         runGame(selectedWordLength,selectedGuesses,availableWords,inputTest);
 
 
