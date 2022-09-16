@@ -31,7 +31,7 @@ const string ALPHABET  = "abcdefghijklmnopqrstuvwxyz";
  * @param guess, possibleWords
  * @return set<String> largestWordGroup
  */
-set<string> largestWordGroup(char& guess, set<string> possibleWords){
+set<string> largestWordGroup(char guess, const set<string> possibleWords){
     map<int,set<string>> wordGroups;
 
 
@@ -76,12 +76,14 @@ set<string> largestWordGroup(char& guess, set<string> possibleWords){
  * @param selectedWordLength, selectedNrOfGuesses, availableWords, debugState
  * @return N/A
  */
-void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availableWords, int debugState){
+void runGame(int electedWordLength, int selectedGuesses, set<string>& availableWords, int debugState){
     set<char> usedAlpabet;
+    string inputString;
     char inputChar;
     int nrOfTriesLeft = selectedGuesses;
     //The "guessword" only filled with _ at the start
     string guessWord(electedWordLength,'_');
+
 
     //Run the game as long as there are guesses left
     while(nrOfTriesLeft> 0){
@@ -91,10 +93,23 @@ void runGame(int& electedWordLength, int& selectedGuesses, set<string>& availabl
         for(set<char>::iterator it=usedAlpabet.begin(); it!=usedAlpabet.end(); ++it){
             cout << *it;
         }
-        cout << "\n Skriv in en bokstav:";
-        cin>>inputChar;
-        //Used to only accept the first character which is entered.
-        cin.ignore(10000, '\n');
+        while(1){
+            cout << "\n Skriv in en bokstav:";
+            cin>>inputString;
+            if(!(inputString.length()==1)){
+                cout << "Skriv endast in 1 bokstav";
+                continue;
+            }else{
+                inputChar=inputString[0];
+            }
+
+            //If input is in alphabet and havent been used before
+            if((ALPHABET.find(inputChar) != string::npos)&&(usedAlpabet.count(inputChar)==0)){
+                break;
+            }else{
+                cout << "\n Input:en är ingen bokstav, eller är redan använd";
+            };
+        }
         //Adds it to the table of used chars
         usedAlpabet.insert(inputChar);
         nrOfTriesLeft--;

@@ -29,7 +29,7 @@ const string ALPHABET  = "abcdefghijklmnopqrstuvwxyz";
  * @param word,wordDict
  * @return neighbor
  */
-set<string> getNeighbors(string word,set<string> &wordDict){
+set<string> getNeighbors(string word,const set<string> &wordDict){
     set<string> neighbor;
     //Jumps through every char in word
     for(int indexInWord = 0; indexInWord < (int) word.size(); indexInWord++){
