@@ -29,6 +29,8 @@ int main(int argc, char *argv[]) {
     Tour squareTour(p, q, r, s);
     // Output the Tour
     squareTour.show();
+    cout << "Size = " << squareTour.size() << "\n";
+    cout << "Distance = " << squareTour.distance() << "\n";
 
     /*
     string filename = "tsp10.txt";
