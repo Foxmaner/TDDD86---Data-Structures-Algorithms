@@ -60,6 +60,18 @@ void Tour::show()
 void Tour::draw(QGraphicsScene *scene)
 {
     // TODO: write this member
+
+
+    if(startNode->next==nullptr){
+        return;
+    }
+    Node *n = startNode;
+    do{
+        n->point.drawTo(n->next->point,scene);
+        n = n->next;
+    }while(n != startNode);
+
+
 }
 
 int Tour::size()
