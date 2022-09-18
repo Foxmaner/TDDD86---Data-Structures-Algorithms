@@ -9,9 +9,33 @@
 #include "Node.h"
 #include "Point.h"
 
-Tour::Tour()
+
+//Default constructor
+Tour::Tour(): startNode(nullptr)
+{
+
+    // TODO: write this member
+}
+
+//Constructor for testCase
+Tour::Tour(Point a, Point b, Point c, Point d)
 {
     // TODO: write this member
+
+    //Skapar 4 noder och tilldelar en punkt till varje
+    Node* aNode = new Node(a,nullptr);
+    Node* bNode = new Node(b,nullptr);
+    Node* cNode = new Node(c,nullptr);
+    Node* dNode = new Node(d,nullptr);
+
+    //Länka ihop punkterna i en cirkel
+    aNode->next = bNode;
+    bNode->next = cNode;
+    cNode->next = dNode;
+    dNode->next = aNode;
+
+    //Tilldelar starten
+    startNode = aNode;
 }
 
 Tour::~Tour()
@@ -22,6 +46,15 @@ Tour::~Tour()
 void Tour::show()
 {
     // TODO: write this member
+    if(startNode->next==nullptr){
+        return;
+    }
+    Node *n = startNode;
+    do{
+        cout << n->point << "\n";
+        n = n->next;
+    }while(n != startNode);
+
 }
 
 void Tour::draw(QGraphicsScene *scene)

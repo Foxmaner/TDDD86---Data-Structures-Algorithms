@@ -18,6 +18,19 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
+
+    // define 4 points forming a square
+    Point p(100.0, 100.0);
+    Point q(500.0, 100.0);
+    Point r(500.0, 500.0);
+    Point s(100.0, 500.0);
+    // Set up a Tour with those four points
+    // The constructor should link p->q->r->s->p
+    Tour squareTour(p, q, r, s);
+    // Output the Tour
+    squareTour.show();
+
+    /*
     string filename = "tsp10.txt";
     ifstream input;
     input.open(filename);
@@ -60,4 +73,5 @@ int main(int argc, char *argv[]) {
     // draw tour
     tour.draw(scene);
     return a.exec(); // start Qt event loop
+    */
 }
