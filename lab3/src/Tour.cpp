@@ -144,7 +144,8 @@ void Tour::insertSmallest(Point p)
 
     Node *nearestNode = startNode;
     do{
-        if((n->point.distanceTo(p)+p.distanceTo(n->next->point)) < (nearestNode->point.distanceTo(p)+p.distanceTo(nearestNode->next->point))){
+        if((n->point.distanceTo(p)+p.distanceTo(n->next->point) - n->point.distanceTo(n->next->point)) <
+                (nearestNode->point.distanceTo(p)+p.distanceTo(nearestNode->next->point) - nearestNode->point.distanceTo(nearestNode->next->point))){
             nearestNode = n;
         }
         n = n->next;
