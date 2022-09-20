@@ -1,8 +1,11 @@
-// This is the .cpp file you will edit and turn in.
-// We have provided a skeleton for you,
-// but you must finish it as described in the spec.
-// Also remove these comments here and add your own.
-// TODO: remove this comment header
+/*
+*Programmerare: Eskbr129, Bjoed735
+ *Eskil Brännerud, Björn Edblom.
+ *
+ * I denna klass implementerade vi fördefinierade funktioner, som ska användas för att sedan i huvudprogrammet
+ * kunna räkna ut kortast rutt mellan punkter
+ *
+*/
 
 #include <iostream>
 #include "Tour.h"
@@ -11,16 +14,18 @@
 
 
 //Default constructor
-Tour::Tour(): startNode(nullptr)
-{
-
-    // TODO: write this member
-}
+Tour::Tour(): startNode(nullptr){}
 
 //Constructor for testCase
-Tour::Tour(Point a, Point b, Point c, Point d)
-{
-    // TODO: write this member
+
+/**
+ * TourConstructor
+ *
+ * the test constructor to create a loop between 4 nodes
+ *
+ * @param Point a, Point b, Point c, Point d
+ */
+Tour::Tour(Point a, Point b, Point c, Point d){
 
     //Skapar 4 noder och tilldelar en punkt till varje
     Node* aNode = new Node(a,nullptr);
@@ -38,14 +43,36 @@ Tour::Tour(Point a, Point b, Point c, Point d)
     startNode = aNode;
 }
 
-Tour::~Tour()
-{
-    // TODO: write this member
+/**
+ * TourDestructor
+ *
+ * Goes through every node and deletes them
+ *
+ */
+Tour::~Tour(){
+    if(startNode->next==nullptr){
+        return;
+    }
+
+    Node *n = startNode;
+    Node *nextNode = startNode->next;
+    do{
+        nextNode = n->next;
+        delete n;
+        n = nextNode;
+    }while(n != startNode);
+
 }
 
+/**
+ * show
+ *
+ * Go through all the nodes and print them out in console
+ *
+ */
 void Tour::show()
 {
-    // TODO: write this member
+
     if(startNode->next==nullptr){
         return;
     }
@@ -57,15 +84,23 @@ void Tour::show()
 
 }
 
+/**
+ * draw
+ *
+ * Goes through every node and draws lines between the points
+ *
+ * @param QGraphicsScene scene
+ */
 void Tour::draw(QGraphicsScene *scene)
 {
-    // TODO: write this member
 
-
+    // do nothing if there is no node
     if(startNode->next==nullptr){
         return;
     }
     Node *n = startNode;
+
+    // draw a line between points while you are not at the begining again
     do{
         n->point.drawTo(n->next->point,scene);
         n = n->next;
@@ -74,14 +109,21 @@ void Tour::draw(QGraphicsScene *scene)
 
 }
 
+/**
+ * size
+ *
+ * Counts every point in the tour
+ *
+ */
 int Tour::size()
 {
-    // TODO: write this member
+
     int size = 0;
     if(startNode->next==nullptr){
         return size;
     }
     Node *n = startNode;
+    // goes through every node and counts how many there is until it goes back to first node
     do{
         size++;
         n = n->next;
@@ -90,14 +132,22 @@ int Tour::size()
     return size;
 }
 
+/**
+ * distance
+ *
+ * Goes through the route and add up the distance on the tour
+ *
+ */
 double Tour::distance()
 {
-    // TODO: write this member
+
     int distance = 0;
     if(startNode->next==nullptr){
         return distance;
     }
     Node *n = startNode;
+
+    // Goes through every node and add up the distance throughout the route
     do{
         distance = distance + n->point.distanceTo(n->next->point);
         n = n->next;
@@ -106,11 +156,19 @@ double Tour::distance()
     return distance;
 }
 
+/**
+ * insertNearest
+ *
+ * Inserts point p with the nearest node
+ *
+ * @param Point p
+ */
 void Tour::insertNearest(Point p)
 {
-    // TODO: write this member
+
     Node *n = startNode;
 
+    // If the list is empty create node with nullpointer
     if(startNode==nullptr){
         startNode = new Node(p,nullptr);
         startNode->next = startNode;
@@ -118,6 +176,8 @@ void Tour::insertNearest(Point p)
     }
 
     Node *nearestNode = startNode;
+
+    // Goes through every node and compare it to the nearestNode and se witch one is closer
     do{
         if(n->point.distanceTo(p) < nearestNode->point.distanceTo(p)){
             nearestNode = n;
@@ -126,16 +186,24 @@ void Tour::insertNearest(Point p)
 
     }while(n != startNode);
 
+    // Insert tempNode in the list
     Node *tempNode = new Node(p,nearestNode->next);
     nearestNode->next = tempNode;
 
 }
 
+/**
+ * insertSmallest
+ *
+ * Insert point p with the node that has the smallest distance wich creates the route with shortest distance
+ *
+ * @param Point p
+ */
 void Tour::insertSmallest(Point p)
 {
-    // TODO: write this member
     Node *n = startNode;
 
+    // If the list is empty create node with nullpointer
     if(startNode==nullptr){
         startNode = new Node(p,nullptr);
         startNode->next = startNode;
@@ -143,6 +211,8 @@ void Tour::insertSmallest(Point p)
     }
 
     Node *nearestNode = startNode;
+
+    // goes through the list and tries to find the shortest path between points a,b and c
     do{
         if((n->point.distanceTo(p)+p.distanceTo(n->next->point) - n->point.distanceTo(n->next->point)) <
                 (nearestNode->point.distanceTo(p)+p.distanceTo(nearestNode->next->point) - nearestNode->point.distanceTo(nearestNode->next->point))){
@@ -152,6 +222,7 @@ void Tour::insertSmallest(Point p)
 
     }while(n != startNode);
 
+    // Insert tempNode in the list
     Node *tempNode = new Node(p,nearestNode->next);
     nearestNode->next = tempNode;
 }
