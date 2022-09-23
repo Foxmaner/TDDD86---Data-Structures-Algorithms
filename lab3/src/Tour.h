@@ -16,10 +16,10 @@ public:
     Tour();
     Tour(Point a, Point b, Point c, Point d);
     ~Tour();
-    void show();
-    void draw(QGraphicsScene* scene);
-    int size();
-    double distance();
+    void show() const;
+    void draw(QGraphicsScene* scene) const;
+    int size() const;
+    double distance() const;
     void insertNearest(Point p);
     void insertSmallest(Point p);
 

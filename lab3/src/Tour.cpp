@@ -50,7 +50,7 @@ Tour::Tour(Point a, Point b, Point c, Point d){
  *
  */
 Tour::~Tour(){
-    if(startNode->next==nullptr){
+    if(startNode==nullptr){
         return;
     }
 
@@ -70,10 +70,10 @@ Tour::~Tour(){
  * Go through all the nodes and print them out in console
  *
  */
-void Tour::show()
+void Tour::show() const
 {
 
-    if(startNode->next==nullptr){
+    if(startNode==nullptr){
         return;
     }
     Node *n = startNode;
@@ -91,11 +91,11 @@ void Tour::show()
  *
  * @param QGraphicsScene scene
  */
-void Tour::draw(QGraphicsScene *scene)
+void Tour::draw(QGraphicsScene *scene) const
 {
 
     // do nothing if there is no node
-    if(startNode->next==nullptr){
+    if(startNode==nullptr){
         return;
     }
     Node *n = startNode;
@@ -115,11 +115,11 @@ void Tour::draw(QGraphicsScene *scene)
  * Counts every point in the tour
  *
  */
-int Tour::size()
+int Tour::size() const
 {
 
     int size = 0;
-    if(startNode->next==nullptr){
+    if(startNode==nullptr){
         return size;
     }
     Node *n = startNode;
@@ -138,20 +138,24 @@ int Tour::size()
  * Goes through the route and add up the distance on the tour
  *
  */
-double Tour::distance()
+double Tour::distance() const
 {
 
     int distance = 0;
-    if(startNode->next==nullptr){
+    if(startNode==nullptr){
         return distance;
     }
     Node *n = startNode;
 
     // Goes through every node and add up the distance throughout the route
+
     do{
-        distance = distance + n->point.distanceTo(n->next->point);
         n = n->next;
+        distance = distance + n->point.distanceTo(n->next->point);
+
     }while(n != startNode);
+
+
 
     return distance;
 }
@@ -179,7 +183,7 @@ void Tour::insertNearest(Point p)
 
     // Goes through every node and compare it to the nearestNode and se witch one is closer
     do{
-        if(n->point.distanceTo(p) < nearestNode->point.distanceTo(p)){
+        if(n->point.distanceTo(p) <= nearestNode->point.distanceTo(p)){
             nearestNode = n;
         }
         n = n->next;
@@ -214,7 +218,7 @@ void Tour::insertSmallest(Point p)
 
     // goes through the list and tries to find the shortest path between points a,b and c
     do{
-        if((n->point.distanceTo(p)+p.distanceTo(n->next->point) - n->point.distanceTo(n->next->point)) <
+        if((n->point.distanceTo(p)+p.distanceTo(n->next->point) - n->point.distanceTo(n->next->point)) <=
                 (nearestNode->point.distanceTo(p)+p.distanceTo(nearestNode->next->point) - nearestNode->point.distanceTo(nearestNode->next->point))){
             nearestNode = n;
         }
