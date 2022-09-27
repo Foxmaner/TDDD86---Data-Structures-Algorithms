@@ -141,7 +141,7 @@ int Tour::size() const
 double Tour::distance() const
 {
 
-    int distance = 0;
+    double distance = 0;
     if(startNode==nullptr){
         return distance;
     }
