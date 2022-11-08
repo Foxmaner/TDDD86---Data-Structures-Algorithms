@@ -26,8 +26,6 @@ void GameState::draw(QGraphicsScene *scene) const {
     hero.draw(scene);
     for (const Robot* robot: robots)
         robot->draw(scene);
-    for (const Junk& junk: junks)
-        junk.draw(scene);
 }
 
 void GameState::teleportHero() {
@@ -43,11 +41,6 @@ void GameState::moveRobots() {
 
 void GameState::updateCrashes() {
     for(unsigned i=0; i < robots.size(); ++i){
-        for(unsigned j=0; j < junks.size(); ++j){
-            if(robots[i]->at(junks[j])){
-                robots[i]->doCrash();
-            }
-        }
         for(unsigned o=i+1; o < robots.size(); ++o){
             if(robots[i]->at(*robots[o])){
                 robots[i]->doCrash();
@@ -68,9 +61,9 @@ int GameState::countJustCrashed()const{
 void GameState::junkTheCrashed(){
     for(unsigned i=0; i < robots.size(); ++i){
         if (robots[i]->justCrashed()) {
-            junks.push_back(Junk(robots[i]->asPoint()));
-            robots[i] = robots[robots.size()-1];
-            robots.pop_back();
+            Robot* junk = new Junk(robots[i] ->asPoint());
+            delete robots[i];
+            robots[i] = junk;
         }
     }
 }
@@ -86,11 +79,6 @@ bool GameState::stillLiveRobots() const {
 bool GameState::heroDead() const {
     for(const Robot* robot: robots){
         if(hero.at(*robot)){
-            return true;
-        }
-    }
-    for(const Junk& junk: junks){
-        if(hero.at(junk)){
             return true;
         }
     }
@@ -110,9 +98,6 @@ Point GameState::getHeroAsPoint() const {return hero.asPoint();}
 bool GameState::isEmpty(const Unit& unit) const {
     for(const Robot* robot: robots)
         if(robot->at(unit))
-            return false;
-    for(const Junk& junk: junks)
-        if(junk.at(unit))
             return false;
     return true;
 }
