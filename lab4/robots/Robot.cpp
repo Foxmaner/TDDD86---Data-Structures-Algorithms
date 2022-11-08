@@ -6,6 +6,11 @@
 #include "Robot.h"
 #include "constants.h"
 
+Robot::Robot(){}
+//Robot::Robot(const Robot& robot) : Unit(robot){
+
+//}
+
 bool Robot::canMove() const{
     return !crashed;
 }
