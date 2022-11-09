@@ -47,9 +47,7 @@ public:
     /*
     * Draw the unit
     */
-    virtual void draw(QGraphicsScene *scene) const{
-
-    };
+    virtual void draw(QGraphicsScene *scene) const;
 
 
     /*

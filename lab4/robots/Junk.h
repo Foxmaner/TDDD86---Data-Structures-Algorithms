@@ -18,10 +18,10 @@ public:
     */
     void draw(QGraphicsScene* scene) const override;
 
-    void moveTowards();
-    void doCrash();
-    void justCrashed();
-    void canMove();
+    void moveTowards(const Unit&) override;
+    void doCrash() override;
+    bool justCrashed() const override;
+    bool canMove() const override;
 };
 
 #endif // JUNK_H

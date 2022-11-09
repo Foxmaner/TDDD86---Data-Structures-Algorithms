@@ -6,16 +6,16 @@
 #include "Junk.h"
 #include "constants.h"
 
-void moveTowards(){
+void Junk::moveTowards(const Unit&){
+
+}
+void Junk::doCrash(){
 
 };
-void doCrash(){
-
-};
-bool justCrashed(){
+bool Junk::justCrashed() const{
     return false;
 };
-bool canMove(){
+bool Junk::canMove() const{
     return false;
 };
 
