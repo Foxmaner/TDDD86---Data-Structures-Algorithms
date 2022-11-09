@@ -24,6 +24,8 @@ public:
      * overlapping hero and numberOfRobots robots
      */
     GameState(int numberOfRobots);
+    GameState(const GameState& gameState);
+    GameState& operator=(const GameState&);
 
     ~GameState();
 

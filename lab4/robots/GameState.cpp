@@ -9,20 +9,52 @@
 #include "constants.h"
 #include <iostream>
 
-GameState::~GameState(){
-    for(Robot* robot: robots){
-        delete robot;
-    }
-}
+
 
 GameState::GameState(int numberOfRobots) {
    for (int i = 0; i < numberOfRobots; i++) {
         Robot* robot;
         robot = new Robot();
-
+        while(!isEmpty(*robot)){
+            delete robot;
+            robot = new Robot();
+        }
         robots.push_back(robot);
     }
     teleportHero();
+}
+
+GameState::GameState( const GameState& gameState) {
+    hero = gameState.hero;
+    //std::vector<Robot*> newRobots;
+    robots = std::vector<Robot*>();
+    for (Robot* robot:gameState.robots){
+        robots.push_back(robot->clone());
+    }
+}
+
+GameState& GameState::operator=(const GameState& gameState){
+    if(&gameState != this){
+    hero = gameState.hero;
+    //std::vector<Robot*> newRobots;
+    //robots = std::vector<Robot*>();
+    for (Robot* robot : robots){
+        delete robot;
+    }
+
+    robots.clear();
+
+    for (Robot* robot : gameState.robots){
+        robots.push_back(robot->clone());
+    }
+    }
+    return *this;
+}
+
+GameState::~GameState(){
+   for(Robot* robot: robots){
+        delete robot;
+    }
 }
 
 void GameState::draw(QGraphicsScene *scene) const {

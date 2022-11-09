@@ -12,7 +12,7 @@
 class Hero : public Unit {
 
 public:
-
+    Hero* clone() const;
     /*
     * Draws this hero onto the given QGraphicsScene.
     */

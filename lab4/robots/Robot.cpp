@@ -28,4 +28,8 @@ void Robot::draw(QGraphicsScene *scene) const{
                              JUNK_RADIUS, JUNK_RADIUS), QPen(), QBrush(ROBOT_COLOR));
 }
 
+Robot* Robot::clone() const{
+    return new Robot(*this);
+}
+
 

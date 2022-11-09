@@ -36,6 +36,7 @@ public:
     */
     virtual void draw(QGraphicsScene* scene) const override;
 
+    Robot* clone() const;
 
 };
 
