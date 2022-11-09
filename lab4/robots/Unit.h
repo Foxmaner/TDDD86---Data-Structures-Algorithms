@@ -42,7 +42,14 @@ public:
     /*
     * Take one step closer to u
     */
-    void moveTowards(const Unit&);
+    virtual void moveTowards(const Unit&);
+
+    /*
+    * Draw the unit
+    */
+    virtual void draw(QGraphicsScene *scene) const{
+
+    };
 
 
     /*
