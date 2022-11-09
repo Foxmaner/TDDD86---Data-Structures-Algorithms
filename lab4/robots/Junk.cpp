@@ -6,8 +6,18 @@
 #include "Junk.h"
 #include "constants.h"
 
+void moveTowards(){
 
+};
+void doCrash(){
 
+};
+bool justCrashed(){
+    return false;
+};
+bool canMove(){
+    return false;
+};
 
 void Junk::draw(QGraphicsScene *scene) const {
     Point corner = asPoint();
