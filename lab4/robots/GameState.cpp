@@ -26,7 +26,6 @@ GameState::GameState(int numberOfRobots) {
 
 GameState::GameState( const GameState& gameState) {
     hero = gameState.hero;
-    //std::vector<Robot*> newRobots;
     robots = std::vector<Robot*>();
     for (Robot* robot:gameState.robots){
         robots.push_back(robot->clone());
@@ -36,8 +35,6 @@ GameState::GameState( const GameState& gameState) {
 GameState& GameState::operator=(const GameState& gameState){
     if(&gameState != this){
     hero = gameState.hero;
-    //std::vector<Robot*> newRobots;
-    //robots = std::vector<Robot*>();
     for (Robot* robot : robots){
         delete robot;
     }

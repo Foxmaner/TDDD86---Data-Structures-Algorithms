@@ -22,6 +22,7 @@ public:
     void doCrash() override;
     bool justCrashed() const override;
     bool canMove() const override;
+    Robot* clone() const override;
 };
 
 #endif // JUNK_H

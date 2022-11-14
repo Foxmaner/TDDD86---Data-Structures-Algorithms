@@ -24,3 +24,7 @@ void Junk::draw(QGraphicsScene *scene) const {
     scene->addEllipse(QRectF(corner.x * UNIT_WIDTH, corner.y * UNIT_HEIGHT,
                              JUNK_RADIUS, JUNK_RADIUS), QPen(), QBrush(JUNK_COLOR));
 }
+
+Robot* Junk::clone() const{
+    return new Junk(*this);
+}
