@@ -13,29 +13,34 @@ class Robot : public Unit {
     bool crashed = false;
 
 public:
-    Robot();
-    Robot(const Point& p): Unit(p){}
-    //Robot(const Robot& robot);
+
+    Robot():Unit(){};
+    Robot(const Point& p): Unit(p){};
+
     /*
      * did not crash yet
      */
-    bool canMove() const;
+    virtual bool canMove() const;
 
     /*
      * Crashes and remembers it
      */
-    void doCrash();
+    virtual void doCrash();
 
     /*
      * Return whether the robot crashed
      */
-    bool justCrashed() const;
+    virtual bool justCrashed() const;
 
 
     /*
     * Draws this robot onto the given QGraphicsScene.
     */
-    void draw(QGraphicsScene* scene) const override;
+
+    virtual void draw(QGraphicsScene* scene) const override;
+
+    virtual Robot* clone() const;
+
 
 };
 

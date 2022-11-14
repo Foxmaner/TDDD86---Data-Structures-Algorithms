@@ -59,4 +59,6 @@ void Unit::checkBounds() {
 }
 
 void Unit::draw(QGraphicsScene *scene) const{
-};
+
+}
+

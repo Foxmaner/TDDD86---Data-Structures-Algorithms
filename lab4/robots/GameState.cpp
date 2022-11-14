@@ -10,15 +10,48 @@
 #include <iostream>
 
 
+
 GameState::GameState(int numberOfRobots) {
    for (int i = 0; i < numberOfRobots; i++) {
         Robot* robot;
+        robot = new Robot();
         while(!isEmpty(*robot)){
+            delete robot;
             robot = new Robot();
         }
         robots.push_back(robot);
     }
     teleportHero();
+}
+
+GameState::GameState( const GameState& gameState) {
+    hero = gameState.hero;
+    robots = std::vector<Robot*>();
+    for (Robot* robot:gameState.robots){
+        robots.push_back(robot->clone());
+    }
+}
+
+GameState& GameState::operator=(const GameState& gameState){
+    if(&gameState != this){
+    hero = gameState.hero;
+    for (Robot* robot : robots){
+        delete robot;
+    }
+
+    robots.clear();
+
+    for (Robot* robot : gameState.robots){
+        robots.push_back(robot->clone());
+    }
+    }
+    return *this;
+}
+
+GameState::~GameState(){
+   for(Robot* robot: robots){
+        delete robot;
+    }
 }
 
 void GameState::draw(QGraphicsScene *scene) const {
@@ -61,7 +94,9 @@ int GameState::countJustCrashed()const{
 void GameState::junkTheCrashed(){
     for(unsigned i=0; i < robots.size(); ++i){
         if (robots[i]->justCrashed()) {
-            Robot* junk = new Junk(robots[i] ->asPoint());
+
+            Robot* junk = new Junk(robots[i]->asPoint());
+
             delete robots[i];
             robots[i] = junk;
         }

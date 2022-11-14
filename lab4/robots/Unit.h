@@ -44,6 +44,7 @@ public:
     */
     virtual void moveTowards(const Unit&);
 
+
     virtual void draw(QGraphicsScene *scene) const;
 
 

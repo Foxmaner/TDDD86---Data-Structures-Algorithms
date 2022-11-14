@@ -11,18 +11,21 @@
 
 class Junk : public Robot {
 public:
-    Junk();
+
     Junk(const Point& p): Robot(p){}
-    //Junk(const Robot &robot);
+
     /*
     * Draws this junk onto the given QGraphicsScene.
     */
     void draw(QGraphicsScene* scene) const override;
 
-    void moveTowards();
-    void doCrash();
-    bool justCrashed();
-    bool canMove();
+
+    void moveTowards(const Unit&) override;
+    void doCrash() override;
+    bool justCrashed() const override;
+    bool canMove() const override;
+    Robot* clone() const override;
+
 };
 
 #endif // JUNK_H
