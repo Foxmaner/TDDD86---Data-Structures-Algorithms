@@ -20,3 +20,28 @@ static string CUBES[NUM_CUBES] = {        // the letters on all 6 sides of every
 };
 
 // TODO: implement the members you declared in Boggle.h
+
+void Boggle::shuffle(){
+
+    int boardPlace = 0;
+    //Places the cube on the board;
+    for(int y=0;y<this->BOARD_SIZE;y++){
+        for(int x=0;x<this->BOARD_SIZE;x++){
+            grid[y][x] = CUBES[boardPlace][randomInteger(0,5)];
+            boardPlace++;
+        }
+    }
+    //Shuffles every cube with a random cube on the board.
+    for(int y=0;y<this->BOARD_SIZE;y++){
+        for(int x=0;x<this->BOARD_SIZE;x++){
+            int randomX = randomInteger(0,3);
+            int randomY = randomInteger(0,3);
+
+            char temp = grid[randomY][randomX];
+
+            grid[randomY][randomX] = grid[y][x];
+            grid[y][x] = temp;
+        }
+    }
+
+};

@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <string>
+#include "grid.h"
+#include "lexicon.h"
 // TODO: include any other header files you need
 
 using namespace std;
@@ -21,9 +23,13 @@ public:
 
     // TODO: decide the public member functions and declare them
 
+    //Shuffles the cubes and insert them on random positions on the grid.
+    void shuffle();
+
 private:
     // TODO: decide the private member variables/functions and declare them
-
+    Grid<char> grid;
+    Lexicon lexicon;
 };
 
 #endif
