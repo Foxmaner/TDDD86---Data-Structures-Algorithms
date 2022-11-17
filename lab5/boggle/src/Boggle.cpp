@@ -27,7 +27,7 @@ void Boggle::shuffle(){
     //Places the cube on the board;
     for(int y=0;y<this->BOARD_SIZE;y++){
         for(int x=0;x<this->BOARD_SIZE;x++){
-            grid[y][x] = CUBES[boardPlace][randomInteger(0,5)];
+            grid[y][x] = CUBES[boardPlace][randomInteger(0,CUBE_SIDES)];
             boardPlace++;
         }
     }
@@ -45,3 +45,11 @@ void Boggle::shuffle(){
     }
 
 };
+void Boggle::printTable(){
+    for(int y=0;y<this->BOARD_SIZE;y++){
+        for(int x=0;x<this->BOARD_SIZE;x++){
+            cout << grid[y][x] << " " << endl;
+        }
+        cout << "\n" << endl;
+    }
+}

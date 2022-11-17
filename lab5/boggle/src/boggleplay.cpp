@@ -16,6 +16,8 @@
  */
 void playOneGame(Boggle& boggle) {
     // TODO: implement this function (and add any other functions you like to help you)
+    //boggle.shuffle();
+    //boggle.printTable();
 
 }
 
