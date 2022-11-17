@@ -11,7 +11,7 @@
 #include "strlib.h"
 
 static const int NUM_CUBES = 16;   // the number of cubes in the game
-static const int CUBE_SIDES = 6;   // the number of sides on each cube
+static const int CUBE_SIDES = 5;   // the number of sides on each cube
 static string CUBES[NUM_CUBES] = {        // the letters on all 6 sides of every cube
    "AAEEGN", "ABBJOO", "ACHOPS", "AFFKPS",
    "AOOTTW", "CIMOTU", "DEILRX", "DELRVY",
@@ -19,37 +19,49 @@ static string CUBES[NUM_CUBES] = {        // the letters on all 6 sides of every
    "EIOSST", "ELRTTY", "HIMNQU", "HLNNRZ"
 };
 
+
+
 // TODO: implement the members you declared in Boggle.h
 
-void Boggle::shuffle(){
+Boggle::Boggle(){
+    shuffle();
+    printTable();
+}
 
+
+void Boggle::shuffle(){
+    grid.resize(4,4);
+    
     int boardPlace = 0;
     //Places the cube on the board;
-    for(int y=0;y<this->BOARD_SIZE;y++){
-        for(int x=0;x<this->BOARD_SIZE;x++){
-            grid[y][x] = CUBES[boardPlace][randomInteger(0,CUBE_SIDES)];
+    for(int y=0;y < BOARD_SIZE;y++){
+        for(int x=0;x < BOARD_SIZE;x++){
+            grid.set(x,y,CUBES[boardPlace][randomInteger(0,CUBE_SIDES)]) ;
             boardPlace++;
         }
     }
+
+
     //Shuffles every cube with a random cube on the board.
-    for(int y=0;y<this->BOARD_SIZE;y++){
-        for(int x=0;x<this->BOARD_SIZE;x++){
+    for(int y=0;y < BOARD_SIZE;y++){
+        for(int x=0;x < BOARD_SIZE;x++){
             int randomX = randomInteger(0,3);
             int randomY = randomInteger(0,3);
 
-            char temp = grid[randomY][randomX];
+            char temp = grid.get(randomY,randomX);
 
-            grid[randomY][randomX] = grid[y][x];
-            grid[y][x] = temp;
+            grid.set(randomY,randomX, grid.get(y,x));
+            grid.set(y, x, temp);
         }
     }
+}; 
 
-};
+
 void Boggle::printTable(){
-    for(int y=0;y<this->BOARD_SIZE;y++){
-        for(int x=0;x<this->BOARD_SIZE;x++){
-            cout << grid[y][x] << " " << endl;
+    for(int y=0;y < BOARD_SIZE;y++){
+        for(int x=0;x < BOARD_SIZE;x++){
+            cout << grid.get(y,x) << " ";
         }
-        cout << "\n" << endl;
+        cout << "\n" ;
     }
 }
