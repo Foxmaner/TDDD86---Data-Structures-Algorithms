@@ -27,6 +27,7 @@ public:
     //Shuffles the cubes and insert them on random positions on the grid.
     void shuffle();
     void printTable();
+    void setTable(string tableString);
 
 private:
     // TODO: decide the private member variables/functions and declare them

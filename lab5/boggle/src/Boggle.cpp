@@ -24,8 +24,7 @@ static string CUBES[NUM_CUBES] = {        // the letters on all 6 sides of every
 // TODO: implement the members you declared in Boggle.h
 
 Boggle::Boggle(){
-    shuffle();
-    printTable();
+
 }
 
 
@@ -63,5 +62,16 @@ void Boggle::printTable(){
             cout << grid.get(y,x) << " ";
         }
         cout << "\n" ;
+    }
+}
+
+void Boggle::setTable(string tableString){
+    grid.resize(BOARD_SIZE,BOARD_SIZE);
+    int count = 0;
+    for(int y=0;y < BOARD_SIZE;y++){
+        for(int x=0;x < BOARD_SIZE;x++){
+            grid.set(y,x,tableString[count]);
+            count++;
+        }
     }
 }
