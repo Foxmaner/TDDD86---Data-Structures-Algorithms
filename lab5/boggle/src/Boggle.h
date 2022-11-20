@@ -21,6 +21,7 @@ public:
     const int MIN_WORD_LENGTH = 4;
     const int BOARD_SIZE = 4;
 
+    Boggle();
     // TODO: decide the public member functions and declare them
 
     //Shuffles the cubes and insert them on random positions on the grid.
@@ -34,3 +35,4 @@ private:
 };
 
 #endif
+
