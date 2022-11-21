@@ -41,7 +41,31 @@ void playOneGame(Boggle& boggle) {
         //Randomise table
         boggle.shuffle();
     }
-    boggle.printTable();
+
+
+    //Play loop
+
+    while(true){
+        clearConsole();
+
+        string inputWord;
+
+        cout << "Its your turn!" << endl;
+        boggle.printTable();
+
+        cout << "Your words (" << boggle.userWords.size() << "): " << endl;
+
+        cout << "Your score: " << boggle.userScore << endl;
+
+        cout << "Type a word (or press Enter to end your turn): " << endl;
+
+        cin >> inputWord;
+        boggle.guessWord(toLowerCase(inputWord));
+
+
+    }
+
+
 
 }
 

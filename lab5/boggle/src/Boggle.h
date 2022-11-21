@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <string>
+#include <set>
 #include "grid.h"
 #include "lexicon.h"
 // TODO: include any other header files you need
@@ -21,6 +22,11 @@ public:
     const int MIN_WORD_LENGTH = 4;
     const int BOARD_SIZE = 4;
 
+    set<string> userWords;
+    set<string> computerWords;
+    int userScore = 0;
+    int computerScore = 0;
+
     Boggle();
     // TODO: decide the public member functions and declare them
 
@@ -28,6 +34,7 @@ public:
     void shuffle();
     void printTable();
     void setTable(string tableString);
+    bool guessWord(string input);
 
 private:
     // TODO: decide the private member variables/functions and declare them

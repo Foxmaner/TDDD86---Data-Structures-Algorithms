@@ -24,7 +24,7 @@ static string CUBES[NUM_CUBES] = {        // the letters on all 6 sides of every
 // TODO: implement the members you declared in Boggle.h
 
 Boggle::Boggle(){
-
+    lexicon=Lexicon(DICTIONARY_FILE);
 }
 
 
@@ -73,5 +73,15 @@ void Boggle::setTable(string tableString){
             grid.set(y,x,tableString[count]);
             count++;
         }
+    }
+}
+
+bool Boggle::guessWord(string input){
+    if(lexicon.contains(input) && input.size() >= MIN_WORD_LENGTH && userWords.find(input) == userWords.end()){
+        userWords.insert(input);
+        userScore++;
+        return true;
+    }else{
+        return false;
     }
 }
