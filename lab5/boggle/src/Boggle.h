@@ -26,6 +26,7 @@ public:
     set<string> computerWords;
     int userScore = 0;
     int computerScore = 0;
+    set<string> possibleWords;
 
     Boggle();
     // TODO: decide the public member functions and declare them
@@ -35,7 +36,8 @@ public:
     void printTable();
     void setTable(string tableString);
     bool guessWord(string input);
-
+    bool isWordOnBoard(string inputWord);
+    bool isWordPossibleReq(int x, int y, string inputWord, vector<pair<int, int>> visitedCords, string searchPath);
 private:
     // TODO: decide the private member variables/functions and declare them
     Grid<char> grid;

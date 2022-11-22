@@ -85,3 +85,40 @@ bool Boggle::guessWord(string input){
         return false;
     }
 }
+
+bool Boggle::isWordOnBoard(string inputWord){
+    for(int y = 0; y < BOARD_SIZE; y++){
+        for(int x = 0; x < BOARD_SIZE; x++){
+            if (grid.get(x,y) != inputWord[0]){
+                continue;
+            }
+            vector<int,int> emptyVector;
+            if(isWordPossibleReq(x,y,inputWord, emptyVector)){
+                return true;
+            }
+        }
+    }
+}
+
+bool Boggle::isWordPossibleReq(int x, int y, string inputWord, vector<pair<int, int>> visitedCords, string searchPath){
+    //Have we found the whole word???
+    if(searchPath==inputWord){
+        return true;
+    }
+
+
+    //Generate cords for all neighbors
+    for(int k = -1; k <= 1; k++){
+        for(int i = -1; i <= 1; i++){
+            int newX = x+k;
+            int newY = y+i;
+            if(grid.inBounds(newX,newY) && grid.get(newX, newY) == inputWord[searchPath.length()+1]){
+
+                visitedCords.push_back(pair<int, int>(2, 2));
+            }
+
+
+            isWordPossibleReq(newX,newY,inputWord,visitedCords,searchPath);
+        }
+    }
+};
