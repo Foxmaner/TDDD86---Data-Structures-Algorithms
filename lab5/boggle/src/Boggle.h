@@ -37,7 +37,7 @@ public:
     void setTable(string tableString);
     bool guessWord(string input);
     bool isWordOnBoard(string inputWord);
-    bool isWordPossibleReq(int x, int y, string inputWord, vector<pair<int, int>> visitedCords, string searchPath);
+    bool isWordPossibleReq(int x, int y, string inputWord, set<pair<int, int>> visitedCords);
 private:
     // TODO: decide the private member variables/functions and declare them
     Grid<char> grid;

@@ -77,7 +77,7 @@ void Boggle::setTable(string tableString){
 }
 
 bool Boggle::guessWord(string input){
-    if(lexicon.contains(input) && input.size() >= MIN_WORD_LENGTH && userWords.find(input) == userWords.end()){
+    if(lexicon.contains(input) && input.size() >= MIN_WORD_LENGTH && userWords.find(input) == userWords.end() && isWordOnBoard(input)){
         userWords.insert(input);
         userScore++;
         return true;
@@ -87,38 +87,63 @@ bool Boggle::guessWord(string input){
 }
 
 bool Boggle::isWordOnBoard(string inputWord){
+
     for(int y = 0; y < BOARD_SIZE; y++){
         for(int x = 0; x < BOARD_SIZE; x++){
-            if (grid.get(x,y) != inputWord[0]){
-                continue;
-            }
-            vector<int,int> emptyVector;
-            if(isWordPossibleReq(x,y,inputWord, emptyVector)){
-                return true;
+            if (grid.get(y,x) == inputWord[0]){
+                set<pair<int, int>> emptyVector;
+                if(isWordPossibleReq(y,x,inputWord, emptyVector)){
+                    return true;
+                    }
+                
+                }
             }
         }
+    
+    return false;
     }
-}
 
-bool Boggle::isWordPossibleReq(int x, int y, string inputWord, vector<pair<int, int>> visitedCords, string searchPath){
-    //Have we found the whole word???
-    if(searchPath==inputWord){
+
+bool Boggle::isWordPossibleReq(int y, int x, string inputWord, set<pair<int, int>> visitedCords){
+    //Have found the whole word
+    if(inputWord.length() == 0){
         return true;
     }
 
+    // Check if current char is on the given cords
+    if(inputWord[0] != grid.get(y, x)){
+        return false;
+    }
+
+    // Check if the visited cord so it is not possible to backtrack
+    if (visitedCords.find(pair<int ,int>(y, x)) != visitedCords.end()){
+            return false;
+        }
+
+
+    
+    // Mark current visited cord
+    visitedCords.insert(pair<int, int>(y,x));
 
     //Generate cords for all neighbors
     for(int k = -1; k <= 1; k++){
         for(int i = -1; i <= 1; i++){
             int newX = x+k;
             int newY = y+i;
-            if(grid.inBounds(newX,newY) && grid.get(newX, newY) == inputWord[searchPath.length()+1]){
-
-                visitedCords.push_back(pair<int, int>(2, 2));
+            
+            // Check the coord is not outside of the grid and you are not taking char from the current cord
+            if(grid.inBounds(newY,newX) && !(k == 0 && i == 0)){
+                cout << "test inbound hihi" << endl;
+                if(isWordPossibleReq(newY,newX,inputWord.substr(1),visitedCords)){
+                    cout <<inputWord << endl;
+                    return true;
+                }
             }
-
-
-            isWordPossibleReq(newX,newY,inputWord,visitedCords,searchPath);
         }
     }
+    cout << "ser om den går direkt ner hit för den kan" << endl;
+    return false;
 };
+
+
+//

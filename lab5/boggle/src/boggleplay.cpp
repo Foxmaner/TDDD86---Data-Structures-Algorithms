@@ -46,7 +46,7 @@ void playOneGame(Boggle& boggle) {
     //Play loop
 
     while(true){
-        clearConsole();
+        //clearConsole();
 
         string inputWord;
 
@@ -60,7 +60,8 @@ void playOneGame(Boggle& boggle) {
         cout << "Type a word (or press Enter to end your turn): " << endl;
 
         cin >> inputWord;
-        boggle.guessWord(toLowerCase(inputWord));
+        boggle.guessWord(toUpperCase(inputWord));
+
 
 
     }
