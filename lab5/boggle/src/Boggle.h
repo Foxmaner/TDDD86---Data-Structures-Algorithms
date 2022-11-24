@@ -38,6 +38,11 @@ public:
     bool guessWord(string input);
     bool isWordOnBoard(string inputWord);
     bool isWordPossibleReq(int x, int y, string inputWord, set<pair<int, int>> visitedCords);
+
+    void findAllWords();
+
+    bool wordAlreadyTaken(string input);
+    void findAllWordsFromPlace(int x, int y, string inputWord, set<pair<int, int>> visitedCords);
 private:
     // TODO: decide the private member variables/functions and declare them
     Grid<char> grid;

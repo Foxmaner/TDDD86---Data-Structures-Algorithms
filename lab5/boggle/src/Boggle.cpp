@@ -145,5 +145,60 @@ bool Boggle::isWordPossibleReq(int y, int x, string inputWord, set<pair<int, int
     return false;
 };
 
+void Boggle::findAllWords(){
+    for(int y = 0; y < BOARD_SIZE; y++){
+        for(int x = 0; x < BOARD_SIZE; x++){
+            set<pair<int, int>> emptyVector;
+            string newString="";
+            findAllWordsFromPlace(y,x,newString,emptyVector);
+            }
+        }
 
-//
+}
+
+bool Boggle::wordAlreadyTaken(string input){
+    if(userWords.find(input) != userWords.end() || computerWords.find(input) != computerWords.end()){
+        return true;
+    }
+}
+
+void Boggle::findAllWordsFromPlace(int y, int x, string inputWord, set<pair<int, int>> visitedCords){
+
+    // Check if the visited cord so it is not possible to backtrack
+    if (visitedCords.find(pair<int ,int>(y, x)) != visitedCords.end()){
+            return;
+        }
+
+    // Mark current visited cord
+    visitedCords.insert(pair<int, int>(y,x));
+
+    //Create new word in string
+    inputWord.push_back(grid.get(y,x));
+
+    // See if there is still a chance, otherwise return
+    if(!lexicon.containsPrefix(inputWord)){
+            return;
+        }
+
+    //See if we can already create a word
+    if(inputWord.length()>=MIN_WORD_LENGTH && lexicon.contains(inputWord) && !wordAlreadyTaken(inputWord)){
+        computerWords.insert(inputWord);
+    }
+
+    //Jump one more step req
+
+    //Generate cords for all neighbors
+    for(int k = -1; k <= 1; k++){
+        for(int i = -1; i <= 1; i++){
+            int newX = x+k;
+            int newY = y+i;
+
+            // Check the coord is not outside of the grid and you are not taking char from the current cord
+            if(grid.inBounds(newY,newX) && !(k == 0 && i == 0)){
+                findAllWordsFromPlace(newY,newX,inputWord,visitedCords);
+            }
+        }
+    }
+
+
+}
