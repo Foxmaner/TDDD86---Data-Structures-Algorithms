@@ -182,7 +182,7 @@ void Boggle::findAllWordsFromPlace(int y, int x, string inputWord, set<pair<int,
 
     //See if we can already create a word
     if(inputWord.length()>=MIN_WORD_LENGTH && lexicon.contains(inputWord) && !wordAlreadyTaken(inputWord)){
-        computerWords.insert(inputWord);
+        possibleWords.insert(inputWord);
     }
 
     //Jump one more step req

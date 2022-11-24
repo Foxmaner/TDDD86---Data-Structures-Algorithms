@@ -49,7 +49,7 @@ void playOneGame(Boggle& boggle) {
         clearConsole();
         boggle.findAllWords();
         cout<< "Computerwords!";
-        for (auto it = boggle.computerWords.begin(); it != boggle.computerWords.end(); ++it){
+        for (auto it = boggle.possibleWords.begin(); it != boggle.possibleWords.end(); ++it){
                 cout << *it << ", ";
         }
 
