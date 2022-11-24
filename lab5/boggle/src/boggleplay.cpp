@@ -47,11 +47,6 @@ void playOneGame(Boggle& boggle) {
 
     while(true){
         clearConsole();
-        boggle.findAllWords();
-        cout<< "Computerwords!";
-        for (auto it = boggle.possibleWords.begin(); it != boggle.possibleWords.end(); ++it){
-                cout << *it << ", ";
-        }
 
         string inputWord;
 
@@ -69,12 +64,36 @@ void playOneGame(Boggle& boggle) {
 
         cout << "Type a word (or press Enter to end your turn): " << endl;
 
-        cin >> inputWord;
-        boggle.guessWord(toUpperCase(inputWord));
+
+        getline(cin, inputWord);
+        if(inputWord.length()==0){
+            break;
+        }else{
+            boggle.guessWord(toUpperCase(inputWord));
+        }
 
 
 
     }
+    //Computers turn!!!
+
+    boggle.findAllWords();
+    cout << "Its my turn!" << endl;
+
+    cout << "My words (" << boggle.computerWords.size() << "): {";
+
+    for (auto it = boggle.possibleWords.begin(); it != boggle.possibleWords.end(); ++it){
+            cout << *it << ", ";
+            boggle.computerScore = boggle.computerScore + (*it).size()-3;
+    }
+    cout << "}" << endl;
+
+    cout << "My score: " << boggle.computerScore << endl;
+
+    cout << "Ja ja ja. I destroyed you. Better luck next time, puny human!" << endl;
+
+
+    return;
 
 
 
