@@ -79,7 +79,7 @@ void Boggle::setTable(string tableString){
 bool Boggle::guessWord(string input){
     if(lexicon.contains(input) && input.size() >= MIN_WORD_LENGTH && userWords.find(input) == userWords.end() && isWordOnBoard(input)){
         userWords.insert(input);
-        userScore++;
+        userScore = userScore + input.size()-3;
         return true;
     }else{
         return false;

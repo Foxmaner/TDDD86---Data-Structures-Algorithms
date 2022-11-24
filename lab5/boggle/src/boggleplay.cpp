@@ -46,14 +46,19 @@ void playOneGame(Boggle& boggle) {
     //Play loop
 
     while(true){
-        //clearConsole();
+        clearConsole();
 
         string inputWord;
 
         cout << "Its your turn!" << endl;
         boggle.printTable();
 
-        cout << "Your words (" << boggle.userWords.size() << "): " << endl;
+        cout << "Your words (" << boggle.userWords.size() << "): {";
+
+        for (auto it = boggle.userWords.begin(); it != boggle.userWords.end(); ++it){
+                cout << *it << ", ";
+        }
+        cout << "}" << endl;
 
         cout << "Your score: " << boggle.userScore << endl;
 
