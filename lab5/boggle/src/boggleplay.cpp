@@ -80,7 +80,7 @@ void playOneGame(Boggle& boggle) {
     boggle.findAllWords();
     cout << "Its my turn!" << endl;
 
-    cout << "My words (" << boggle.computerWords.size() << "): {";
+    cout << "My words (" << boggle.possibleWords.size() << "): {";
 
     for (auto it = boggle.possibleWords.begin(); it != boggle.possibleWords.end(); ++it){
             cout << *it << ", ";
