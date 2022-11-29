@@ -40,9 +40,7 @@ void Boggle::shuffleBoggle(){
             boardPlace++;
         }
     }
-
     shuffle(grid);
-
 };
 
 

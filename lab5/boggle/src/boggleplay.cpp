@@ -26,8 +26,6 @@ bool isAllChars(string input){
  */
 void playOneGame(Boggle& boggle) {
     // TODO: implement this function (and add any other functions you like to help you)
-    //boggle.shuffle();
-    //boggle.printTable();
     //Ask if we wanna set own table
     if (yesOrNo("Do you want to set your own table? (Y/N)? ")) {
             string boardString;
@@ -36,6 +34,8 @@ void playOneGame(Boggle& boggle) {
                 cin >> boardString;
             }
             boggle.setTable(boardString);
+            cin.clear();
+            cin.ignore();
 
     }else{
         //Randomise table
@@ -46,7 +46,7 @@ void playOneGame(Boggle& boggle) {
     //Play loop
 
     while(true){
-        clearConsole();
+        //clearConsole();
 
         string inputWord;
 
@@ -91,7 +91,6 @@ void playOneGame(Boggle& boggle) {
     cout << "My score: " << boggle.computerScore << endl;
 
     cout << "Ja ja ja. I destroyed you. Better luck next time, puny human!" << endl;
-
 
     return;
 
