@@ -28,8 +28,9 @@ Boggle::Boggle(){
 }
 
 
-void Boggle::shuffle(){
+void Boggle::shuffleBoggle(){
     grid.resize(4,4);
+
 
     int boardPlace = 0;
     //Places the cube on the board;
@@ -40,19 +41,8 @@ void Boggle::shuffle(){
         }
     }
 
+    shuffle(grid);
 
-    //Shuffles every cube with a random cube on the board.
-    for(int y=0;y < BOARD_SIZE;y++){
-        for(int x=0;x < BOARD_SIZE;x++){
-            int randomX = randomInteger(0,3);
-            int randomY = randomInteger(0,3);
-
-            char temp = grid.get(randomY,randomX);
-
-            grid.set(randomY,randomX, grid.get(y,x));
-            grid.set(y, x, temp);
-        }
-    }
 };
 
 
@@ -133,15 +123,12 @@ bool Boggle::isWordPossibleReq(int y, int x, string inputWord, set<pair<int, int
             
             // Check the coord is not outside of the grid and you are not taking char from the current cord
             if(grid.inBounds(newY,newX) && !(k == 0 && i == 0)){
-                cout << "test inbound hihi" << endl;
                 if(isWordPossibleReq(newY,newX,inputWord.substr(1),visitedCords)){
-                    cout <<inputWord << endl;
                     return true;
                 }
             }
         }
     }
-    cout << "ser om den går direkt ner hit för den kan" << endl;
     return false;
 };
 

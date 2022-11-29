@@ -39,7 +39,7 @@ void playOneGame(Boggle& boggle) {
 
     }else{
         //Randomise table
-        boggle.shuffle();
+        boggle.shuffleBoggle();
     }
 
 

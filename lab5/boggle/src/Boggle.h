@@ -32,7 +32,7 @@ public:
     // TODO: decide the public member functions and declare them
 
     //Shuffles the cubes and insert them on random positions on the grid.
-    void shuffle();
+    void shuffleBoggle();
     void printTable();
     void setTable(string tableString);
     bool guessWord(string input);
