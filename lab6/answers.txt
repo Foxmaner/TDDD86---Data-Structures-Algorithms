@@ -1,0 +1,12 @@
+eventQueue. Initieras i simulation.h, och används sedan för att lagra alla events. I funktionen “scheduleEvent()” så lagras ett nytt event in i kön. Sedan i funktion “run()” så är det en kontinuerlig loop som körs, som sedan bearbetar nästa event i denna kö. Ända tills kön är tom, då är simulationen klar.
+
+allTheFish. Initieras i simulation.h. Och är en vector för att lagra alla fiskar, oavsett om dom är döda eller inte. Vectorn bearbetas te.x i funktionen “harvestTonnageNow()” där vi går igenom alla fiskar, och gör olika saker beroende på storlek, om dom lever osv. Om dom är döda så raderas dom, medans om dom lever, och är tillräckligt stora så fångas dom in.
+
+3 par. (LANDING, MIN_CATCHABLE_AGE)
+(70000,250), (100000,550), (100000,250)
+
+Hypotes: Hållbarheten påverkas av att sänka åldern där man fångar fiskarna. Om vi fångar fiskarna vid lägre ålder så kan det leda till utfiskning. Landing påverkar också, eftersom att vi kan råka ta för många fiskar.
+
+
+Vi kan inte hitta några minnesläckor.
+En ny fisk allokerar minne i “processEvent()” när den föds. Men det blir aldrig en minnesläcka, då minnet frias när fisken dör eller blir fångad.
