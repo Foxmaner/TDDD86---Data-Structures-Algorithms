@@ -142,7 +142,7 @@ void Boggle::findAllWords(){
 }
 
 bool Boggle::wordAlreadyTaken(string input){
-    if(userWords.find(input) != userWords.end() || computerWords.find(input) != computerWords.end()){
+    if(userWords.find(input) != userWords.end() || possibleWords.find(input) != possibleWords.end()){
         return true;
     }
 }
@@ -188,6 +188,13 @@ void Boggle::findAllWordsFromPlace(int y, int x, string inputWord, set<pair<int,
 
 }
 
+void Boggle::resetGame(){
+    userWords.clear();
+    possibleWords.clear();
+    userScore = 0;
+    computerScore = 0;
+}
+
 set<string> Boggle::getUserWords() const
 {
     return userWords;
@@ -196,4 +203,34 @@ set<string> Boggle::getUserWords() const
 void Boggle::setUserWords(const set<string> &value)
 {
     userWords = value;
+}
+
+set<string> Boggle::getPossibleWords() const
+{
+    return possibleWords;
+}
+
+void Boggle::setPossibleWords(const set<string> &value)
+{
+    possibleWords = value;
+}
+
+int Boggle::getUserScore() const
+{
+    return userScore;
+}
+
+void Boggle::setUserScore(int value)
+{
+    userScore = value;
+}
+
+int Boggle::getComputerScore() const
+{
+    return computerScore;
+}
+
+void Boggle::setComputerScore(int value)
+{
+    computerScore = value;
 }

@@ -61,7 +61,7 @@ void playOneGame(Boggle& boggle) {
 
         cout << "}" << endl;
 
-        cout << "Your score: " << boggle.userScore << endl;
+        cout << "Your score: " << boggle.getUserScore() << endl;
 
         cout << "Type a word (or press Enter to end your turn): " << endl;
 
@@ -78,27 +78,25 @@ void playOneGame(Boggle& boggle) {
     }
     //Computers turn!!!
 
+
     boggle.findAllWords();
+    set<string> tempPossibleWords = boggle.getPossibleWords();
+
     cout << "Its my turn!" << endl;
 
-    cout << "My words (" << boggle.possibleWords.size() << "): {";
+    cout << "My words (" << tempPossibleWords.size() << "): {";
 
-    for (auto it = boggle.possibleWords.begin(); it != boggle.possibleWords.end(); ++it){
+    for (auto it = tempPossibleWords.begin(); it != tempPossibleWords.end(); ++it){
             cout << *it << ", ";
-            boggle.computerScore = boggle.computerScore + (*it).size()-3;
+            boggle.setComputerScore(boggle.getComputerScore() + (*it).size()-3);
     }
     cout << "}" << endl;
 
-    cout << "My score: " << boggle.computerScore << endl;
+    cout << "My score: " << boggle.getComputerScore() << endl;
 
     cout << "Ja ja ja. I destroyed you. Better luck next time, puny human!" << endl;
 
-    boggle.possibleWords.clear();
-    boggle.computerWords.clear();
-
-    boggle.computerScore = 0;
-    boggle.userScore = 0;
-
+    boggle.resetGame();
     return;
 
 

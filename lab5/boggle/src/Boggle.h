@@ -23,11 +23,6 @@ public:
     const int BOARD_SIZE = 4;
 
 
-    set<string> computerWords;
-    int userScore = 0;
-    int computerScore = 0;
-    set<string> possibleWords;
-
     Boggle();
     // TODO: decide the public member functions and declare them
 
@@ -46,11 +41,26 @@ public:
     set<string> getUserWords() const;
     void setUserWords(const set<string> &value);
 
+    set<string> getPossibleWords() const;
+    void setPossibleWords(const set<string> &value);
+
+    int getUserScore() const;
+    void setUserScore(int value);
+
+    int getComputerScore() const;
+    void setComputerScore(int value);
+
+    void resetGame();
+
 private:
     // TODO: decide the private member variables/functions and declare them
     Grid<char> grid;
     Lexicon lexicon;
+
     set<string> userWords;
+    set<string> possibleWords;
+    int userScore = 0;
+    int computerScore = 0;
 };
 
 #endif
