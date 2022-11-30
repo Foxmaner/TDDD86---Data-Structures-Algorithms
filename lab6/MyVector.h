@@ -45,10 +45,12 @@ private:
     T* storage;
     unsigned int capacity;
     unsigned int numberOfElements;
-    // private members?
 
 };
 
+/*
+ * Constructor initiates list with capacity 1
+*/
 template<typename T>
 MyVector<T>::MyVector(){
     storage = new T[1];
@@ -56,19 +58,46 @@ MyVector<T>::MyVector(){
     numberOfElements = 0;
 }
 
+/*
+ * Delete the only thing in the heap "storage"
+*/
 template<typename T>
 MyVector<T>::~MyVector(){
     delete [] storage;
 }
 
+/*
+ * Create a copy of a another MyVecktor
+*/
 template<typename T>
 MyVector<T>::MyVector(const MyVector& other){
+    capacity = other.capacity;
+    numberOfElements = other.numberOfElements;
+    storage = new T[other.capacity];
+    for (unsigned int i= 0; i < other.capacity; i ++){
+        storage[i] = other.storage[i];
+    }
+    return this;
 }
 
+/*
+ * Assign a copy of a another MyVecktor to this MyVecktor and release the array
+*/
 template<typename T>
 MyVector<T>& MyVector<T>::operator =(const MyVector& other){
-    // TODO: replace the code below with your code for this member
-    MYEXCEPTION("unimplemented method");
+    // If we assign to itself return this
+    if(this == other){
+        return this;
+    }
+    delete [] storage;
+    capacity = other.capacity;
+    numberOfElements = other.numberOfElements;
+    storage = new T[other.capacity];
+    for (unsigned int i= 0; i < other.capacity; i ++){
+        storage[i] = other.storage[i];
+    }
+
+    return this;
 }
 
 template<typename T>
