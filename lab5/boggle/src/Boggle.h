@@ -1,9 +1,3 @@
-// This is the .h file you will edit and turn in.
-// We have provided a minimal skeleton for you,
-// but you must finish it as described in the spec.
-// Also remove these comments here and add your own, as well as on the members.
-// TODO: remove this comment header and replace it with your own
-
 #ifndef _boggle_h
 #define _boggle_h
 
@@ -12,7 +6,7 @@
 #include <set>
 #include "grid.h"
 #include "lexicon.h"
-// TODO: include any other header files you need
+
 
 using namespace std;
 
@@ -24,20 +18,59 @@ public:
 
 
     Boggle();
-    // TODO: decide the public member functions and declare them
 
-    //Shuffles the cubes and insert them on random positions on the grid.
+    /*
+    * Shuffles the cubes and insert them on random positions on the grid.
+    */
     void shuffleBoggle();
-    void printTable();
-    void setTable(string tableString);
-    bool guessWord(string input);
-    bool isWordOnBoard(string inputWord);
-    bool isWordPossibleReq(int x, int y, string inputWord, set<pair<int, int>> visitedCords);
 
+
+    /*
+    * Print out the table with all the chars
+    */
+    void printTable();
+
+    /*
+    * Let user set up a custom table with 16 letters
+    */
+    void setTable(const string tableString);
+
+    /*
+    * Lets user guess a word and check if it is valid
+    */
+    bool guessWord(const string input);
+
+    /*
+    * Goes through all x and y and call isWordPossibleReq
+    */
+    bool isWordOnBoard(const string inputWord);
+
+
+    /*
+    * Try recusivly find the given word
+    */
+    bool isWordPossibleReq(const int x, const int y, string inputWord, set<pair<int, int>> visitedCords);
+
+
+    /*
+    * Goes through all x and y and call findAllWordsFromPLace
+    */
     void findAllWords();
 
-    bool wordAlreadyTaken(string input);
-    void findAllWordsFromPlace(int x, int y, string inputWord, set<pair<int, int>> visitedCords);
+
+    /*
+    * Check if the word is long enough and not already taken
+    */
+    bool wordAlreadyTaken(const string input);
+
+    /*
+    * Try recusivly find a new word from x and y position
+    */
+    void findAllWordsFromPlace(const int x,const int y, string inputWord, set<pair<int, int>> visitedCords);
+
+    /*
+    * Geters and seters
+    */
     set<string> getUserWords() const;
     void setUserWords(const set<string> &value);
 
@@ -50,6 +83,9 @@ public:
     int getComputerScore() const;
     void setComputerScore(int value);
 
+    /*
+    * reset game variables for a new run
+    */
     void resetGame();
 
 private:

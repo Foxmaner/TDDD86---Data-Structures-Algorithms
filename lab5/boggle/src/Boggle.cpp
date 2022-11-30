@@ -65,6 +65,7 @@ void Boggle::setTable(string tableString){
 }
 
 bool Boggle::guessWord(string input){
+    // If the word is longer then 4 and in lexicon and not already used
     if(lexicon.contains(input) && input.size() >= MIN_WORD_LENGTH && userWords.find(input) == userWords.end() && isWordOnBoard(input)){
         userWords.insert(input);
         userScore = userScore + input.size()-3;
