@@ -42,27 +42,27 @@ public:
     unsigned size()const;
 
 private:
-
+    T* storage;
+    unsigned int capacity;
+    unsigned int numberOfElements;
     // private members?
 
 };
 
 template<typename T>
 MyVector<T>::MyVector(){
-    // TODO: replace the code below with your code for this member
-    MYEXCEPTION("unimplemented method");
+    storage = new T[1];
+    capacity = 1;
+    numberOfElements = 0;
 }
 
 template<typename T>
 MyVector<T>::~MyVector(){
-    // TODO: replace the code below with your code for this member
-    MYEXCEPTION("unimplemented method");
+    delete [] storage;
 }
 
 template<typename T>
 MyVector<T>::MyVector(const MyVector& other){
-    // TODO: replace the code below with your code for this member
-    MYEXCEPTION("unimplemented method");
 }
 
 template<typename T>
