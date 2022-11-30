@@ -85,9 +85,6 @@ MyVector<T>::MyVector(const MyVector& other){
 template<typename T>
 MyVector<T>& MyVector<T>::operator =(const MyVector& other){
     // If we assign to itself return this
-    if(this == other){
-        return this;
-    }
     delete [] storage;
     capacity = other.capacity;
     numberOfElements = other.numberOfElements;
@@ -96,7 +93,7 @@ MyVector<T>& MyVector<T>::operator =(const MyVector& other){
         storage[i] = other.storage[i];
     }
 
-    return this;
+    return *this;
 }
 
 
@@ -124,7 +121,6 @@ void MyVector<T>::push_back(const T& e){
 */
 template<typename T>
 void MyVector<T>::pop_back(){
-    delete storage[numberOfElements];
     numberOfElements--;
 
 }
