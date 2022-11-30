@@ -22,7 +22,7 @@ public:
     const int MIN_WORD_LENGTH = 4;
     const int BOARD_SIZE = 4;
 
-    set<string> userWords;
+
     set<string> computerWords;
     int userScore = 0;
     int computerScore = 0;
@@ -43,10 +43,14 @@ public:
 
     bool wordAlreadyTaken(string input);
     void findAllWordsFromPlace(int x, int y, string inputWord, set<pair<int, int>> visitedCords);
+    set<string> getUserWords() const;
+    void setUserWords(const set<string> &value);
+
 private:
     // TODO: decide the private member variables/functions and declare them
     Grid<char> grid;
     Lexicon lexicon;
+    set<string> userWords;
 };
 
 #endif

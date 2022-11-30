@@ -52,12 +52,13 @@ void playOneGame(Boggle& boggle) {
 
         cout << "Its your turn!" << endl;
         boggle.printTable();
+        cout << "Your words (" << boggle.getUserWords().size() << "): {";
 
-        cout << "Your words (" << boggle.userWords.size() << "): {";
-
-        for (auto it = boggle.userWords.begin(); it != boggle.userWords.end(); ++it){
+        set<string> tempSet = boggle.getUserWords();
+        for (auto it = tempSet.begin(); it != tempSet.end(); ++it){
                 cout << *it << ", ";
         }
+
         cout << "}" << endl;
 
         cout << "Your score: " << boggle.userScore << endl;
@@ -94,7 +95,7 @@ void playOneGame(Boggle& boggle) {
 
     boggle.possibleWords.clear();
     boggle.computerWords.clear();
-    boggle.userWords.clear();
+
     boggle.computerScore = 0;
     boggle.userScore = 0;
 

@@ -187,3 +187,13 @@ void Boggle::findAllWordsFromPlace(int y, int x, string inputWord, set<pair<int,
 
 
 }
+
+set<string> Boggle::getUserWords() const
+{
+    return userWords;
+}
+
+void Boggle::setUserWords(const set<string> &value)
+{
+    userWords = value;
+}
