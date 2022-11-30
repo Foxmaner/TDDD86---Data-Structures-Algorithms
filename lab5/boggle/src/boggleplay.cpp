@@ -46,7 +46,7 @@ void playOneGame(Boggle& boggle) {
     //Play loop
 
     while(true){
-        //clearConsole();
+        clearConsole();
 
         string inputWord;
 
@@ -91,6 +91,12 @@ void playOneGame(Boggle& boggle) {
     cout << "My score: " << boggle.computerScore << endl;
 
     cout << "Ja ja ja. I destroyed you. Better luck next time, puny human!" << endl;
+
+    boggle.possibleWords.clear();
+    boggle.computerWords.clear();
+    boggle.userWords.clear();
+    boggle.computerScore = 0;
+    boggle.userScore = 0;
 
     return;
 
