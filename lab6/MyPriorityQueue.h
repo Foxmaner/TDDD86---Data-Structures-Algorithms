@@ -33,19 +33,22 @@ public:
   unsigned size() const;
 
 private:
-    // Other private members?
+    //Number of things in priority queue;
+    int n = 0;
+    bool isLeaf(int pos);
+    int leftchild(int pos);
+    int rightchild(int pos);
+    int parent(int pos);
 };
 
 template <typename T, typename C>
 MyPriorityQueue<T,C>::MyPriorityQueue(){
-    // TODO: replace the code below with your code for this member
-    MYEXCEPTION("unimplemented method");
+    vector_array = new MyVector<T>();
 }
 
 template <typename T, typename C>
 MyPriorityQueue<T,C>::~MyPriorityQueue(){
-    // TODO: replace the code below with your code for this member
-    MYEXCEPTION("unimplemented method");
+    delete vector_array;
 }
 
 template <typename T, typename C>
@@ -54,10 +57,12 @@ void MyPriorityQueue<T,C>::push(const T& t){
     MYEXCEPTION("unimplemented method");
 }
 
+/*
+ * Returns the element with heighest priority
+*/
 template <typename T, typename C>
 T MyPriorityQueue<T,C>::top()const{
-    // TODO: replace the code below with your code for this member
-    MYEXCEPTION("unimplemented method");
+    return vector_array[0];
 }
 
 template <typename T, typename C>
@@ -66,16 +71,42 @@ void MyPriorityQueue<T,C>::pop(){
     MYEXCEPTION("unimplemented method");
 }
 
+/*
+ * Returns true if storage size = 0;
+*/
 template <typename T, typename C>
 bool MyPriorityQueue<T,C>::empty()const{
-    // TODO: replace the code below with your code for this member
-    MYEXCEPTION("unimplemented method");
+    return vector_array.empty();
 }
 
+/*
+ * Returns the number of elements in storage
+*/
 template <typename T, typename C>
 unsigned MyPriorityQueue<T,C>::size()const{
-    // TODO: replace the code below with your code for this member
-    MYEXCEPTION("unimplemented method");
+    return vector_array.size();
 }
+
+bool isLeaf(int pos){
+    return (pos >= n/2) && (pos < n);
+};
+int leftchild(int pos){
+    if (pos >= n/2){
+        return -1;
+    }
+    return 2*pos + 1;
+};
+int rightchild(int pos){
+    if (pos >= (n-1)/2){
+        return -1;
+    }
+    return 2*pos + 2;
+};
+int parent(int pos){
+    if (pos <= 0){
+        return -1;
+    }
+    return (pos-1)/2;
+};
 
 #endif // MY_PRIORITY_QUEUE_H
