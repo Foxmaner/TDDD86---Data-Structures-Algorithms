@@ -9,6 +9,8 @@
 
 #include "MyVector.h"
 #include "MyException.h"
+#include <algorithm>
+using namespace std;
 
 
 template <typename T, typename C>
@@ -17,8 +19,7 @@ class MyPriorityQueue
     MyVector<T> vector_array;
     C strictly_larger_operator;
 
-    //Number of things in priority queue;
-    int n = 0;
+
 public:
     MyPriorityQueue();
 
@@ -41,30 +42,35 @@ private:
     int rightchild(int pos);
     int parent(int pos);
     void shiftdown(int pos);
+    void swap(T current, T parent);
 };
 
 template <typename T, typename C>
 MyPriorityQueue<T,C>::MyPriorityQueue(){
-    //vector_array = new MyVector<T>();
-    n = vector_array.size();
+
 
 }
 
 template <typename T, typename C>
 MyPriorityQueue<T,C>::~MyPriorityQueue(){
-    delete &vector_array;
+
 }
 
 template <typename T, typename C>
 void MyPriorityQueue<T,C>::push(const T& t){
-    int curr = n++;
-       vector_array[curr] = t;  // Start at end of heap
-       // Now sift up until curr's parent's key > curr's key
-       while ((curr != 0) && (vector_array[curr].compareTo(vector_array[parent(curr)]) > 0)) {
-         swap(vector_array, curr, parent(curr));
-         curr = parent(curr);
+
+    vector_array.push_back(t); // Start at end of heap
+    int curr = vector_array.size();
+
+    while((curr != 0) && !strictly_larger_operator(vector_array[curr], vector_array[parent(curr)])){
+
+        T temp = vector_array[curr];
+        vector_array[curr] = vector_array[parent(curr)];
+        vector_array[parent(curr)] = temp;
+
+        curr = parent(curr);
     }
-    n = vector_array.size();
+        return;
 }
 
 /*
@@ -77,13 +83,20 @@ T MyPriorityQueue<T,C>::top()const{
 
 template <typename T, typename C>
 void MyPriorityQueue<T,C>::pop(){
-    swap(vector_array, 0, --n); // Swap maximum with last value
-     // Not on last element
-    if (n != 0){
-      // Put new heap root val in correct place
-      shiftdown(0);
-      }
-    return vector_array[n];
+
+    int n = vector_array.size() - 1;
+    if (n == 0){
+        return;
+    }// Removing from empty heap
+    // Swap maximum with last value
+    T temp = vector_array[0];
+    vector_array[0] = vector_array[vector_array.size()];
+    vector_array[vector_array.size()] = temp;
+    if (n != 0){      // Not on last element
+        shiftdown(0);   // Put new heap root val in correct place
+    }
+    vector_array.pop_back();
+
 }
 
 /*
@@ -108,24 +121,37 @@ unsigned MyPriorityQueue<T,C>::size()const{
 */
 template <typename T, typename C>
   void MyPriorityQueue<T,C>::shiftdown(int pos) {
+    int n = vector_array.size() - 1;
     if ((pos < 0) || (pos >= n)) return; // Illegal position
     while (!isLeaf(pos)) {
       int j = leftchild(pos);
-      if ((j<(n-1)) && (vector_array[j].compareTo(vector_array[j+1]) < 0))
+      if ((j<(n-1)) && strictly_larger_operator(vector_array[j], vector_array[parent(j + 1)]))
         j++; // j is now index of child with greater value
-      if (vector_array[pos].compareTo(vector_array[j]) >= 0) return;
-      swap(vector_array, pos, j);
+      if (strictly_larger_operator(vector_array[j], vector_array[parent(j + 1)])) return;
+      T temp = vector_array[pos];
+      vector_array[pos] = vector_array[j];
+      vector_array[j] = temp;
       pos = j;  // Move down
     }
   }
 
 
+
+template <typename T, typename C>
+void MyPriorityQueue<T,C>::swap(T current, T parent){
+    T temp = vector_array[current];
+    vector_array[current] = vector_array[parent(current)];
+    vector_array[parent(current)] = temp;
+}
+
 template <typename T, typename C>
 bool MyPriorityQueue<T,C>::isLeaf(int pos){
+    int n = vector_array.size() - 1;
     return (pos >= n/2) && (pos < n);
 };
 template <typename T, typename C>
 int MyPriorityQueue<T,C>::leftchild(int pos){
+    int n = vector_array.size() - 1;
     if (pos >= n/2){
         return -1;
     }
@@ -133,6 +159,7 @@ int MyPriorityQueue<T,C>::leftchild(int pos){
 };
 template <typename T, typename C>
 int MyPriorityQueue<T,C>::rightchild(int pos){
+    int n = vector_array.size() - 1;
     if (pos >= (n-1)/2){
         return -1;
     }
