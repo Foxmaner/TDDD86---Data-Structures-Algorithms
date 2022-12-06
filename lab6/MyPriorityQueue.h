@@ -48,7 +48,6 @@ private:
 template <typename T, typename C>
 MyPriorityQueue<T,C>::MyPriorityQueue(){
 
-
 }
 
 template <typename T, typename C>
@@ -60,13 +59,13 @@ template <typename T, typename C>
 void MyPriorityQueue<T,C>::push(const T& t){
 
     vector_array.push_back(t); // Start at end of heap
-    int curr = vector_array.size();
+    int curr = vector_array.size() - 1;
 
-    while((curr != 0) && !strictly_larger_operator(vector_array[curr], vector_array[parent(curr)])){
-
-        T temp = vector_array[curr];
-        vector_array[curr] = vector_array[parent(curr)];
-        vector_array[parent(curr)] = temp;
+    while((curr > 0) && !strictly_larger_operator(vector_array[curr], vector_array[parent(curr)])){
+        // Swap
+        T temp = vector_array[parent(curr)];
+        vector_array[parent(curr)] = vector_array[curr];
+        vector_array[curr] = temp;
 
         curr = parent(curr);
     }
@@ -84,15 +83,16 @@ T MyPriorityQueue<T,C>::top()const{
 template <typename T, typename C>
 void MyPriorityQueue<T,C>::pop(){
 
-    int n = vector_array.size() - 1;
+    int n = vector_array.size();
     if (n == 0){
         return;
     }// Removing from empty heap
     // Swap maximum with last value
     T temp = vector_array[0];
-    vector_array[0] = vector_array[vector_array.size()];
+    vector_array[0] = vector_array[vector_array.size() - 1];
     vector_array[vector_array.size()] = temp;
-    if (n != 0){      // Not on last element
+
+    if (n > 0){      // Not on last element
         shiftdown(0);   // Put new heap root val in correct place
     }
     vector_array.pop_back();
@@ -121,13 +121,16 @@ unsigned MyPriorityQueue<T,C>::size()const{
 */
 template <typename T, typename C>
   void MyPriorityQueue<T,C>::shiftdown(int pos) {
-    int n = vector_array.size() - 1;
+    int n = vector_array.size();
     if ((pos < 0) || (pos >= n)) return; // Illegal position
     while (!isLeaf(pos)) {
       int j = leftchild(pos);
-      if ((j<(n-1)) && strictly_larger_operator(vector_array[j], vector_array[parent(j + 1)]))
+      if ((j<(n-1)) && strictly_larger_operator(vector_array[j], vector_array[j + 1])){
         j++; // j is now index of child with greater value
-      if (strictly_larger_operator(vector_array[j], vector_array[parent(j + 1)])) return;
+      }
+      if (!strictly_larger_operator(vector_array[pos], vector_array[j])) {
+          return;
+      }
       T temp = vector_array[pos];
       vector_array[pos] = vector_array[j];
       vector_array[j] = temp;
@@ -137,40 +140,31 @@ template <typename T, typename C>
 
 
 
-template <typename T, typename C>
-void MyPriorityQueue<T,C>::swap(T current, T parent){
-    T temp = vector_array[current];
-    vector_array[current] = vector_array[parent(current)];
-    vector_array[parent(current)] = temp;
-}
+
 
 template <typename T, typename C>
 bool MyPriorityQueue<T,C>::isLeaf(int pos){
-    int n = vector_array.size() - 1;
+    int n = vector_array.size();
     return (pos >= n/2) && (pos < n);
 };
 template <typename T, typename C>
 int MyPriorityQueue<T,C>::leftchild(int pos){
-    int n = vector_array.size() - 1;
-    if (pos >= n/2){
-        return -1;
-    }
-    return 2*pos + 1;
+    int n = vector_array.size();
+    if (pos >= n/2) return -1;
+        return 2*pos + 1;
 };
+
 template <typename T, typename C>
 int MyPriorityQueue<T,C>::rightchild(int pos){
-    int n = vector_array.size() - 1;
-    if (pos >= (n-1)/2){
-        return -1;
-    }
-    return 2*pos + 2;
+    int n = vector_array.size();
+    if (pos >= (n-1)/2) return -1;
+        return 2*pos + 2;
+
 };
 template <typename T, typename C>
 int MyPriorityQueue<T,C>::parent(int pos){
-    if (pos <= 0){
-        return -1;
-    }
-    return (pos-1)/2;
+    if (pos <= 0) return -1;
+        return (pos-1)/2;
 };
 
 #endif // MY_PRIORITY_QUEUE_H
