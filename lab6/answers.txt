@@ -10,3 +10,5 @@ Hypotes: Hållbarheten påverkas av att sänka åldern där man fångar fiskarna
 
 Vi kan inte hitta några minnesläckor.
 En ny fisk allokerar minne i “processEvent()” när den föds. Men det blir aldrig en minnesläcka, då minnet frias när fisken dör eller blir fångad.
+
+Vi testade att öka kapaciteten på vector med ett konstant värde istället för en multipel av nuvarande kapacitet. Det ledde till mycket sämre prestanda eftersom att vi då behövde utöka kapaciteten fler gånger. Och eftersom att utökning kräver en kopiering av hela vectorn, så är det väldigt dyrt prestanda-mässigt.
