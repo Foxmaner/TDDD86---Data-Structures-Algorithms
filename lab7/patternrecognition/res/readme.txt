@@ -1,33 +1,34 @@
 /**********************************************************************
- *  Mönsterigenkänning readme.txt
+ *  Mï¿½nsterigenkï¿½nning readme.txt
  **********************************************************************/
 
 /**********************************************************************
- *  Empirisk    Fyll i tabellen nedan med riktiga körtider i sekunder
- *  analys      när det känns vettigt att vänta på hela beräkningen.
- *              Ge uppskattningar av körtiden i övriga fall.
+ *  Empirisk    Fyll i tabellen nedan med riktiga kï¿½rtider i sekunder
+ *  analys      nï¿½r det kï¿½nns vettigt att vï¿½nta pï¿½ hela berï¿½kningen.
+ *              Ge uppskattningar av kï¿½rtiden i ï¿½vriga fall.
  *
  **********************************************************************/
     
       N       brute       sortering
  ----------------------------------
-    150
-    200
-    300
-    400
-    800
-   1600
-   3200
-   6400
-  12800
+    150       0.027
+    200       0.073
+    300       0.240
+    400       0.610
+    800       4.144
+   1600      31.789
+   3200        ?    
+   6400        ?
+  12800        ?
 
 
 /**********************************************************************
- *  Teoretisk   Ge ordo-uttryck för värstafallstiden för programmen som
+ *  Teoretisk   Ge ordo-uttryck fï¿½r vï¿½rstafallstiden fï¿½r programmen som
  *  analys      en funktion av N. Ge en kort motivering.
  *
  **********************************************************************/
 
-Brute:
+Brute: Ã„r O(Nâ´)eftersom att nÃ¤r programmet itererar gÃ¶r den det med 4
+loopar i varandra, dÃ¤r varje loop gÃ¥r upp till N.
 
 Sortering:
