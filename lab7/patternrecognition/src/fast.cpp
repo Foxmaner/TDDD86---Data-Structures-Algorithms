@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     // open file
-    string filename = "input100.txt";
+    string filename = "input400.txt";
     ifstream input;
     input.open(filename);
 
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
     render_points(scene, points);
     view->scale(1, -1); //screen y-axis is inverted
     view->resize(view->sizeHint());
-    view->setWindowTitle("Brute Force Pattern Recognition");
+    view->setWindowTitle("Fast as fuck boiiii");
     view->show();
 
     // sort points by natural order
@@ -86,7 +86,8 @@ int main(int argc, char *argv[]) {
         for(auto pair : slopeList){
             if(pair.second.size() >= 3){
                 //Draw line form first point to last point
-                render_line(scene, points.front(), pair.second.back());
+                // Only need to draw from first point to the last point because every point is sorted in a line
+                render_line(scene, points.at(p), pair.second.back());
                 a.processEvents();
             }
         }
@@ -105,3 +106,4 @@ int main(int argc, char *argv[]) {
 
     return a.exec(); // start Qt event loop
 }
+
