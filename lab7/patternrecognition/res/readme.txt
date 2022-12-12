@@ -11,15 +11,15 @@
     
       N       brute       sortering
  ----------------------------------
-    150       0.027
-    200       0.073
-    300       0.240
-    400       0.610
-    800       4.144
-   1600      31.789
-   3200      ~500    
-   6400      ~8000
-  12800      ~128000
+    150       0.027         0.013
+    200       0.073         0.070
+    300       0.240         0.084
+    400       0.610         0.125
+    800       4.144         0.536
+   1600      31.789         1.489
+   3200      ~500           6.343
+   6400      ~8000          28.397
+  12800      ~128000        108.691
 
 
 /**********************************************************************
@@ -32,3 +32,6 @@ Brute: Är O(N⁴)eftersom att när programmet itererar gör den det med 4
 loopar i varandra, där varje loop går upp till N.
 
 Sortering:
+fast: ÄR O(N²) eftersom att när programmet itererar gör den det med 2
+loppar med storleken N och en till lopp som är försumbar för den blir en
+konstant.
