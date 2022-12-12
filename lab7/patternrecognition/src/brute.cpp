@@ -2,7 +2,6 @@
  * TDDD86 Pattern Recognition
  * This program computes and plots all line segments involving 4 points
  * in a file using Qt.
- */
 
 #include <QApplication>
 #include <QGraphicsView>
@@ -92,3 +91,4 @@ int main(int argc, char *argv[]) {
 
     return a.exec(); // start Qt event loop
 }
+ */

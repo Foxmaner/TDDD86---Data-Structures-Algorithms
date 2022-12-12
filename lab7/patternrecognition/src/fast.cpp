@@ -72,26 +72,27 @@ int main(int argc, char *argv[]) {
     //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     //Here we implement the new algorithm!!!
     //
+    //A map with slopes as key, and a vector of points
 
     //Go through every point
     for (size_t p = 0; p < points.size(); ++p) {
-        //A map with slopes as key, and a vector of points
-        map<double , vector<Point>> slopeList;
+         map<double , vector<Point>> slopeList;
         //Go through every other point.
         for(size_t p1 = p+1; p1 < points.size(); p1++){
             //Add the point to the array at the key with corresponding slope.
             slopeList[points.at(p).slopeTo(points.at(p1))].push_back(points.at(p1));
         }
 
-        for(const auto &pair : slopeList){
-            if(pair.second.size()<=3){
+        for(auto pair : slopeList){
+            if(pair.second.size() >= 3){
                 //Draw line form first point to last point
-                render_line(scene, points.at(p), *(pair.second.end() - 1));
+                render_line(scene, points.front(), pair.second.back());
                 a.processEvents();
             }
         }
 
     }
+
 
     //
     //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
