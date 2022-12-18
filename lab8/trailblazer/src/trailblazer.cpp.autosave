@@ -20,9 +20,8 @@ bool depthFirstReq(BasicGraph& graph, Vertex* start, Vertex* end, vector<Node*>&
         return true;
     }
     else{
-        // Catch every neight
+        // Check every neighbor and see if they are not visited
         for(auto n: graph.getNeighbors(start)){
-            // if the node is node is not visited
             if(!n->visited){
                 if(depthFirstReq(graph,n, end , path)){
                     path.push_back(start);
@@ -46,10 +45,7 @@ vector<Node *> depthFirstSearch(BasicGraph& graph, Vertex* start, Vertex* end) {
 }
 
 vector<Node *> breadthFirstSearch(BasicGraph& graph, Vertex* start, Vertex* end) {
-    // TODO: implement this function; remove these comments
-    //       (The function body code provided below is just a stub that returns
-    //        an empty vector so that the overall project will compile.
-    //        You should remove that code and replace it with your implementation.)
+
     vector<Vertex*> path;
     return path;
 }
