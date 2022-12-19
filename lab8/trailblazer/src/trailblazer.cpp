@@ -102,20 +102,20 @@ vector<Node *> breadthFirstSearch(BasicGraph& graph, Vertex* start, Vertex* end)
 vector<Node *> dijkstrasAlgorithm(BasicGraph& graph, Vertex* start, Vertex* end) {
     graph.resetData();
     vector<Vertex*> path;
-
     PriorityQueue<Vertex*> pQueue;
-    //Sets current vertex to start
+    //Sets current vertex(node) to start
     Vertex* currentVertex = start;
     //Sets the cost to 0
     pQueue.enqueue(currentVertex, 0);
 
-    //Fortsätt sålänge det finns fler paths att undersöka
+    //Continiue as long as there are more nodes to be explored
     while(!pQueue.isEmpty()){
+        //Take the next node in the queue, to visit and handle it
         currentVertex = pQueue.dequeue();
         currentVertex->visited=true;
         currentVertex->setColor(GREEN);
 
-        //Kolla om vi är framme, bygg upp vägen tillbaka.
+        //See if we have reached the end, and backtrack to create a route like previus algoritm
         if(currentVertex==end){
             while (currentVertex != nullptr) {
                 currentVertex->setColor(GREEN);
@@ -126,21 +126,27 @@ vector<Node *> dijkstrasAlgorithm(BasicGraph& graph, Vertex* start, Vertex* end)
             return path;
         }
 
+        //Go through all arcs from the current node
         for(auto e: currentVertex->arcs){
-            //Följ edge:n till noden i slutet
+            //Follow the edge to find the neighbor
             Node* neighbor = e->finish;
-            //Kolla om den ej är besökt, om besökt så struntar vi i den.
+            //Calculate the new cost for the neighbor
             double newCost = (currentVertex->cost) + (e->cost);
+            //Only handle the neighbor that are not already visited
             if(!neighbor->visited){
                 neighbor->setColor(YELLOW);
+                //The neighbors previus cost
                 double oldCost = neighbor->cost;
-                //If 0 = we havent shecked it.
+                //If 0 = we havent checked it before.
                 if(oldCost == 0){
+                    //add the node to the queue, with its newly calculated cost
                     pQueue.enqueue(neighbor,newCost);
                     neighbor->cost = newCost;
                     neighbor->previous = currentVertex;
                 }else{
+                    //If its a already visited, see if the new way costs less
                     if(oldCost>newCost){
+                        //If so, change the route to the more effective
                         pQueue.changePriority(neighbor,newCost);
                         neighbor->previous = currentVertex;
                         neighbor->cost = newCost;
@@ -151,6 +157,7 @@ vector<Node *> dijkstrasAlgorithm(BasicGraph& graph, Vertex* start, Vertex* end)
         }
 
     }
+    //If we dont find a path, return no path :)
     return vector<Node*>();
 }
 
