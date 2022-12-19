@@ -68,7 +68,6 @@ vector<Node *> breadthFirstSearch(BasicGraph& graph, Vertex* start, Vertex* end)
             return path;
 
         }
-
         //Vi fortsätter
         bredthQueue.pop();
         for(auto n: graph.getNeighbors(currentNode)){
@@ -114,12 +113,6 @@ vector<Node *> dijkstrasAlgorithm(BasicGraph& graph, Vertex* start, Vertex* end)
             return path;
         }
 
-
-
-
-
-
-
         for(auto e: currentVertex->arcs){
             //Följ edge:n till noden i slutet
             Node* neighbor = e->finish;
@@ -148,6 +141,7 @@ vector<Node *> dijkstrasAlgorithm(BasicGraph& graph, Vertex* start, Vertex* end)
     return vector<Node*>();
 }
 
+
 vector<Node *> aStar(BasicGraph& graph, Vertex* start, Vertex* end) {
     graph.resetData();
     vector<Vertex*> path;
@@ -174,12 +168,6 @@ vector<Node *> aStar(BasicGraph& graph, Vertex* start, Vertex* end) {
             reverse(path.begin(),path.end());
             return path;
         }
-
-
-
-
-
-
 
         for(auto e: currentVertex->arcs){
             //Följ edge:n till noden i slutet
