@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "costs.h"
 #include "trailblazer.h"
+#include "pqueue.h"
 #include <queue>
 // TODO: include any other headers you need; remove this comment
 using namespace std;
@@ -72,6 +73,7 @@ vector<Node *> breadthFirstSearch(BasicGraph& graph, Vertex* start, Vertex* end)
         bredthQueue.pop();
         for(auto n: graph.getNeighbors(currentNode)){
             if(!n->visited){
+                //Skapar en rutt, genom att referera grannarna till föregående.
                 n->previous=currentNode;
                 n->setColor(YELLOW);
                 bredthQueue.push(n);
@@ -85,12 +87,65 @@ vector<Node *> breadthFirstSearch(BasicGraph& graph, Vertex* start, Vertex* end)
 }
 
 vector<Node *> dijkstrasAlgorithm(BasicGraph& graph, Vertex* start, Vertex* end) {
-    // TODO: implement this function; remove these comments
-    //       (The function body code provided below is just a stub that returns
-    //        an empty vector so that the overall project will compile.
-    //        You should remove that code and replace it with your implementation.)
+    graph.resetData();
     vector<Vertex*> path;
-    return path;
+
+    PriorityQueue<Vertex*> pQueue;
+    //Sets current vertex to start
+    Vertex* currentVertex = start;
+    //Sets the cost to 0
+    pQueue.enqueue(currentVertex, 0);
+
+    //Fortsätt sålänge det finns fler paths att undersöka
+    while(!pQueue.isEmpty()){
+        currentVertex = pQueue.dequeue();
+        currentVertex->visited=true;
+        currentVertex->setColor(GREEN);
+
+        //Kolla om vi är framme, bygg upp vägen tillbaka.
+        if(currentVertex==end){
+            while (currentVertex != nullptr) {
+                currentVertex->setColor(GREEN);
+                path.push_back(currentVertex);
+                currentVertex = currentVertex->previous;
+            }
+            reverse(path.begin(),path.end());
+            return path;
+        }
+
+
+
+
+
+
+
+        for(auto e: currentVertex->arcs){
+            //Följ edge:n till noden i slutet
+            Node* neighbor = e->finish;
+            //Kolla om den ej är besökt, om besökt så struntar vi i den.
+            double newCost = (currentVertex->cost) + (e->cost);
+            if(!neighbor->visited){
+                neighbor->setColor(YELLOW);
+                double oldCost = neighbor->cost;
+                //If 0 = we havent shecked it.
+                if(oldCost == 0){
+                    cout << "hejhej!";
+                    pQueue.enqueue(neighbor,newCost);
+                    neighbor->cost = newCost;
+                    neighbor->previous = currentVertex;
+                }else{
+                    if(oldCost>newCost){
+                        pQueue.changePriority(neighbor,newCost);
+                        neighbor->previous = currentVertex;
+                        neighbor->cost = newCost;
+                    }
+                }
+            }
+
+        }
+
+    }
+    return vector<Node*>();
 }
 
 vector<Node *> aStar(BasicGraph& graph, Vertex* start, Vertex* end) {
