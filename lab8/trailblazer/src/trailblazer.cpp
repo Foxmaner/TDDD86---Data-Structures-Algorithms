@@ -12,6 +12,7 @@
 using namespace std;
 
 bool depthFirstReq(BasicGraph& graph, Vertex* start, Vertex* end, vector<Node*>& path){
+    //Starts by visiting the start node
     start->visited = true;
     start->setColor(GREEN);
     // If you have reached the end.
@@ -23,13 +24,16 @@ bool depthFirstReq(BasicGraph& graph, Vertex* start, Vertex* end, vector<Node*>&
         // Check every neighbor and see if they are not visited
         for(auto n: graph.getNeighbors(start)){
             if(!n->visited){
+                //recursivly visit the neighbors
                 if(depthFirstReq(graph,n, end , path)){
+                    //Add current node to the path
                     path.push_back(start);
                     return true;
                 }
             }
         }
     }
+    //If the node is already visited
     start->setColor(GRAY);
     return false;
 
@@ -40,6 +44,7 @@ bool depthFirstReq(BasicGraph& graph, Vertex* start, Vertex* end, vector<Node*>&
 vector<Node *> depthFirstSearch(BasicGraph& graph, Vertex* start, Vertex* end) {
     vector<Vertex*> path;
     graph.resetData();
+    //Calls the recursive help function
     depthFirstReq(graph, start, end, path);
     return path;
 }
@@ -49,33 +54,41 @@ vector<Node *> breadthFirstSearch(BasicGraph& graph, Vertex* start, Vertex* end)
     graph.resetData();
     queue<Node*> bredthQueue;
     bredthQueue.push(start);
+    //Start by visiting the start node
     start->visited = true;
 
-
+    //Continiue while there are nodes left to explore
     while(bredthQueue.size()>0){
-
+        //Handle the next node in queue
         Node* currentNode = bredthQueue.front();
         currentNode->visited=true;
-        //bredthQueue.pop();
         currentNode->setColor(GREEN);
+
+        //See if the node is the end
         if(currentNode==end){
+            //If so, backtrack, and push into the path vector
             while (currentNode != nullptr) {
                 currentNode->setColor(GREEN);
                 path.push_back(currentNode);
                 currentNode = currentNode->previous;
             }
+            //Reverse it so its in the correct order
             reverse(path.begin(),path.end());
             return path;
 
         }
-        //Vi fortsätter
+        //If we are not at the end node
         bredthQueue.pop();
+        //Go through all neighbor nodes
         for(auto n: graph.getNeighbors(currentNode)){
+            //Handle those who are not already visited
             if(!n->visited){
                 n->visited = true;
-                //Skapar en rutt, genom att referera grannarna till föregående.
+                //Create a route by giving the neighbor a referance to its previus node
+                //Makes it possible to backtrack a route
                 n->previous=currentNode;
                 n->setColor(YELLOW);
+                //Push the neighbor to then handle it as the currentNode
                 bredthQueue.push(n);
             }
 
