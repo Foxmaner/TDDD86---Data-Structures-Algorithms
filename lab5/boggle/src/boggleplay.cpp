@@ -70,8 +70,16 @@ void playOneGame(Boggle& boggle) {
         if(inputWord.length()==0){
             break;
         }else{
-            boggle.guessWord(toUpperCase(inputWord));
+            if(boggle.guessWord(toUpperCase(inputWord))){
+                cout << "you have found a new word!: "<< inputWord << endl;
+            }
+            else{
+                cout << "your word is not found" << endl;
+            }
         }
+        cout << "... Enter to continue" << endl;
+        cin.ignore();
+
 
 
 
