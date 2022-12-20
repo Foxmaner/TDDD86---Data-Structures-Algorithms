@@ -146,6 +146,9 @@ bool Boggle::wordAlreadyTaken(string input){
     if(userWords.find(input) != userWords.end() || possibleWords.find(input) != possibleWords.end()){
         return true;
     }
+    else{
+        return false;
+    }
 }
 
 void Boggle::findAllWordsFromPlace(int y, int x, string inputWord, set<pair<int, int>> visitedCords){
