@@ -33,7 +33,7 @@ void playOneGame(Boggle& boggle) {
                 cout << "Please type in a string with 16 letters" << endl;
                 cin >> boardString;
             }
-            boggle.setTable(boardString);
+            boggle.setTable(toUpperCase(boardString));
             cin.clear();
             cin.ignore();
 
