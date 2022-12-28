@@ -33,6 +33,7 @@ void playOneGame(Boggle& boggle) {
                 cout << "Please type in a string with 16 letters" << endl;
                 cin >> boardString;
             }
+            // Set to uppercase so the grid is easier to check
             boggle.setTable(toUpperCase(boardString));
             cin.clear();
             cin.ignore();
